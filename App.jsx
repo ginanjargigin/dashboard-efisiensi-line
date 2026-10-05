@@ -147,6 +147,7 @@ const {
   sheetId,
   mk,
   scheduleSave,
+  saveScheduler: saveSchedulerRef.current,
 });
   if (!ready || (!db && !loadError)) {
     return (

@@ -22,13 +22,23 @@ import {
   removeNgTypeFromDb,
 } from "../utils/ngUtils";
 
+import {
+  deleteProductionNgType,
+  deleteProductionMetric,
+  deleteProductionDay,
+  deleteProductionSheet,
+} from "../services/supabaseWriteService";
+
+
 export function useAppActions({
   setDb,
   setSheetId,
   sheetId,
   mk,
   scheduleSave,
+  saveScheduler,
 }) {
+
   /* ================================
      NG TYPE
   ================================= */
@@ -46,6 +56,7 @@ export function useAppActions({
       return next;
     });
   };
+
 
   const updateNgType = (
     sId,
@@ -66,22 +77,50 @@ export function useAppActions({
     });
   };
 
-  const removeNgType = (
+
+  const removeNgType = async (
     sId,
     ngTypeId
   ) => {
-    setDb((prev) => {
-      const next = removeNgTypeFromDb(
-        prev,
-        sId,
+
+    try {
+
+      /*
+       * Pastikan autosave sebelumnya selesai
+       * sebelum melakukan DELETE.
+       */
+      await saveScheduler?.flush();
+
+      /*
+       * DELETE eksplisit di database.
+       */
+      await deleteProductionNgType(
         ngTypeId
       );
 
-      scheduleSave(next);
+      /*
+       * Setelah database berhasil dihapus,
+       * baru update state React.
+       */
+      setDb((prev) =>
+        removeNgTypeFromDb(
+          prev,
+          sId,
+          ngTypeId
+        )
+      );
 
-      return next;
-    });
+    } catch (error) {
+
+      console.error(
+        "REMOVE NG TYPE ERROR:",
+        error
+      );
+
+      throw error;
+    }
   };
+
 
   /* ================================
      PRODUCTION ENTRY
@@ -111,6 +150,7 @@ export function useAppActions({
     });
   };
 
+
   /* ================================
      NG DAILY ENTRY
   ================================= */
@@ -137,6 +177,7 @@ export function useAppActions({
     });
   };
 
+
   /* ================================
      DAILY NOTE
   ================================= */
@@ -161,33 +202,63 @@ export function useAppActions({
     });
   };
 
+
   /* ================================
      CLEAR DAILY ENTRY
   ================================= */
 
-  const clearEntry = (
+  const clearEntry = async (
     sId,
     d
   ) => {
-    setDb((prev) => {
-      const next = clearEntryInDb(
-        prev,
-        mk,
+
+    try {
+
+      /*
+       * Tunggu autosave yang mungkin masih berjalan.
+       */
+      await saveScheduler?.flush();
+
+      /*
+       * DELETE hanya untuk sheet + tanggal
+       * yang dipilih user.
+       */
+      await deleteProductionDay(
         sId,
         d
       );
 
-      scheduleSave(next);
+      /*
+       * Setelah database berhasil,
+       * hapus tanggal tersebut dari state lokal.
+       */
+      setDb((prev) =>
+        clearEntryInDb(
+          prev,
+          mk,
+          sId,
+          d
+        )
+      );
 
-      return next;
-    });
+    } catch (error) {
+
+      console.error(
+        "CLEAR DAILY ENTRY ERROR:",
+        error
+      );
+
+      throw error;
+    }
   };
+
 
   /* ================================
      SHEET
   ================================= */
 
   const addSheet = (name) => {
+
     const s = createSheet(name);
 
     setDb((prev) => {
@@ -204,27 +275,62 @@ export function useAppActions({
     setSheetId(s.id);
   };
 
-  const removeSheet = (sId) => {
-    setDb((prev) => {
-      const next = removeSheetFromDb(
-        prev,
+
+  const removeSheet = async (
+    sId
+  ) => {
+
+    try {
+
+      /*
+       * Pastikan tidak ada snapshot lama
+       * yang sedang menunggu disimpan.
+       */
+      await saveScheduler?.flush();
+
+      /*
+       * DELETE seluruh sheet secara eksplisit.
+       * Foreign key CASCADE akan menangani
+       * data turunannya.
+       */
+      await deleteProductionSheet(
         sId
       );
 
-      scheduleSave(next);
+      /*
+       * Setelah database berhasil,
+       * baru update state lokal.
+       */
+      setDb((prev) => {
 
-      if (
-        sheetId === sId &&
-        next.sheets.length
-      ) {
-        setSheetId(
-          next.sheets[0].id
+        const next = removeSheetFromDb(
+          prev,
+          sId
         );
-      }
 
-      return next;
-    });
+        if (
+          sheetId === sId &&
+          next.sheets.length
+        ) {
+          setSheetId(
+            next.sheets[0].id
+          );
+        }
+
+        return next;
+      });
+
+    } catch (error) {
+
+      console.error(
+        "REMOVE SHEET ERROR:",
+        error
+      );
+
+      throw error;
+    }
   };
+
 
   const updateSheetName = (
     sId,
@@ -243,11 +349,14 @@ export function useAppActions({
     });
   };
 
+
   /* ================================
      METRIC
   ================================= */
 
-  const addMetric = (sId) => {
+  const addMetric = (
+    sId
+  ) => {
     setDb((prev) => {
       const next = addMetricToDb(
         prev,
@@ -259,6 +368,7 @@ export function useAppActions({
       return next;
     });
   };
+
 
   const updateMetric = (
     sId,
@@ -281,22 +391,49 @@ export function useAppActions({
     });
   };
 
-  const removeMetric = (
+
+  const removeMetric = async (
     sId,
     mId
   ) => {
-    setDb((prev) => {
-      const next = removeMetricFromDb(
-        prev,
-        sId,
+
+    try {
+
+      /*
+       * Pastikan autosave selesai.
+       */
+      await saveScheduler?.flush();
+
+      /*
+       * DELETE metric secara eksplisit.
+       */
+      await deleteProductionMetric(
         mId
       );
 
-      scheduleSave(next);
+      /*
+       * Setelah database berhasil,
+       * update state lokal.
+       */
+      setDb((prev) =>
+        removeMetricFromDb(
+          prev,
+          sId,
+          mId
+        )
+      );
 
-      return next;
-    });
+    } catch (error) {
+
+      console.error(
+        "REMOVE METRIC ERROR:",
+        error
+      );
+
+      throw error;
+    }
   };
+
 
   /* ================================
      SHEET ORDER
@@ -319,11 +456,13 @@ export function useAppActions({
     });
   };
 
+
   /* ================================
      RETURN ACTIONS
   ================================= */
 
   return {
+
     // Production
     updateEntry,
 

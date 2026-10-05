@@ -1,5 +1,10 @@
 import { supabase } from "./supabaseClient";
 
+
+/* =========================================================
+   AUTOSAVE
+========================================================= */
+
 export async function saveDbToSupabase(db) {
   const { data, error } = await supabase.rpc(
     "sync_production_snapshot",
@@ -21,7 +26,13 @@ export async function saveDbToSupabase(db) {
 
   return data;
 }
-export async function deleteNgTypeFromSupabase(
+
+
+/* =========================================================
+   DELETE NG TYPE
+========================================================= */
+
+export async function deleteProductionNgType(
   ngTypeId
 ) {
   const { data, error } = await supabase.rpc(
@@ -33,7 +44,81 @@ export async function deleteNgTypeFromSupabase(
 
   if (error) {
     throw new Error(
-      `Gagal menghapus NG characteristic: ${error.message}`
+      `Gagal menghapus karakteristik NG: ${error.message}`
+    );
+  }
+
+  return data;
+}
+
+
+/* =========================================================
+   DELETE METRIC
+========================================================= */
+
+export async function deleteProductionMetric(
+  metricId
+) {
+  const { data, error } = await supabase.rpc(
+    "delete_production_metric",
+    {
+      p_metric_id: metricId,
+    }
+  );
+
+  if (error) {
+    throw new Error(
+      `Gagal menghapus metric: ${error.message}`
+    );
+  }
+
+  return data;
+}
+
+
+/* =========================================================
+   DELETE PRODUCTION DAY
+========================================================= */
+
+export async function deleteProductionDay(
+  sheetId,
+  date
+) {
+  const { data, error } = await supabase.rpc(
+    "delete_production_day",
+    {
+      p_sheet_id: sheetId,
+      p_tanggal: date,
+    }
+  );
+
+  if (error) {
+    throw new Error(
+      `Gagal menghapus data tanggal: ${error.message}`
+    );
+  }
+
+  return data;
+}
+
+
+/* =========================================================
+   DELETE SHEET / LINE
+========================================================= */
+
+export async function deleteProductionSheet(
+  sheetId
+) {
+  const { data, error } = await supabase.rpc(
+    "delete_production_sheet",
+    {
+      p_sheet_id: sheetId,
+    }
+  );
+
+  if (error) {
+    throw new Error(
+      `Gagal menghapus line: ${error.message}`
     );
   }
 

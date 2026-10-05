@@ -7,7 +7,18 @@ export function createSaveScheduler({
   let pendingDb = null;
   let saving = false;
 
-  let resolveIdle = null;
+  const idleWaiters = [];
+
+  const resolveIdleWaiters = () => {
+    if (saving || pendingDb) {
+      return;
+    }
+
+    while (idleWaiters.length) {
+      const resolve = idleWaiters.shift();
+      resolve();
+    }
+  };
 
   const runSave = async (db) => {
     saving = true;
@@ -15,34 +26,32 @@ export function createSaveScheduler({
     try {
       await saveDb(db);
       setSaveState("saved");
-    } catch {
+    } catch (error) {
       setSaveState("error");
+      throw error;
     } finally {
       saving = false;
-
-      if (pendingDb) {
-        const nextDb = pendingDb;
-        pendingDb = null;
-
-        await runSave(nextDb);
-        return;
-      }
-
-      setTimeout(() => {
-        setSaveState("idle");
-      }, 1500);
-
-      if (resolveIdle) {
-        const resolve = resolveIdle;
-        resolveIdle = null;
-        resolve();
-      }
     }
+
+    if (pendingDb) {
+      const nextDb = pendingDb;
+      pendingDb = null;
+
+      await runSave(nextDb);
+      return;
+    }
+
+    setTimeout(() => {
+      setSaveState("idle");
+    }, 1500);
+
+    resolveIdleWaiters();
   };
 
   return {
     schedule(nextDb) {
       setSaveState("saving");
+
       pendingDb = nextDb;
 
       if (saving) {
@@ -59,9 +68,17 @@ export function createSaveScheduler({
         const dbToSave = pendingDb;
         pendingDb = null;
 
-        if (!dbToSave) return;
+        if (!dbToSave) {
+          resolveIdleWaiters();
+          return;
+        }
 
-        runSave(dbToSave);
+        runSave(dbToSave).catch(() => {
+          /*
+           * Error sudah ditangani oleh runSave()
+           * melalui setSaveState("error").
+           */
+        });
       }, delay);
     },
 
@@ -71,10 +88,18 @@ export function createSaveScheduler({
         timer = null;
       }
 
+      /*
+       * Tidak ada save yang sedang berjalan
+       * dan tidak ada snapshot yang menunggu.
+       */
       if (!saving && !pendingDb) {
         return;
       }
 
+      /*
+       * Ada snapshot yang menunggu tetapi
+       * belum ada save yang berjalan.
+       */
       if (!saving && pendingDb) {
         const dbToSave = pendingDb;
         pendingDb = null;
@@ -83,8 +108,12 @@ export function createSaveScheduler({
         return;
       }
 
+      /*
+       * Save sedang berjalan.
+       * Tunggu sampai seluruh antrean selesai.
+       */
       await new Promise((resolve) => {
-        resolveIdle = resolve;
+        idleWaiters.push(resolve);
       });
     },
 
@@ -95,6 +124,7 @@ export function createSaveScheduler({
       }
 
       pendingDb = null;
+      resolveIdleWaiters();
     },
   };
 }

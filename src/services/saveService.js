@@ -7,6 +7,8 @@ export function createSaveScheduler({
   let pendingDb = null;
   let saving = false;
 
+  let resolveIdle = null;
+
   const runSave = async (db) => {
     saving = true;
 
@@ -18,10 +20,6 @@ export function createSaveScheduler({
     } finally {
       saving = false;
 
-      /*
-       * Jika ada perubahan baru saat proses save berlangsung,
-       * jalankan hanya snapshot terbaru.
-       */
       if (pendingDb) {
         const nextDb = pendingDb;
         pendingDb = null;
@@ -33,17 +31,18 @@ export function createSaveScheduler({
       setTimeout(() => {
         setSaveState("idle");
       }, 1500);
+
+      if (resolveIdle) {
+        const resolve = resolveIdle;
+        resolveIdle = null;
+        resolve();
+      }
     }
   };
 
   return {
     schedule(nextDb) {
       setSaveState("saving");
-
-      /*
-       * Selalu simpan snapshot terbaru.
-       * Snapshot lama tidak perlu dikirim lagi.
-       */
       pendingDb = nextDb;
 
       if (saving) {
@@ -64,6 +63,29 @@ export function createSaveScheduler({
 
         runSave(dbToSave);
       }, delay);
+    },
+
+    async flush() {
+      if (timer) {
+        clearTimeout(timer);
+        timer = null;
+      }
+
+      if (!saving && !pendingDb) {
+        return;
+      }
+
+      if (!saving && pendingDb) {
+        const dbToSave = pendingDb;
+        pendingDb = null;
+
+        await runSave(dbToSave);
+        return;
+      }
+
+      await new Promise((resolve) => {
+        resolveIdle = resolve;
+      });
     },
 
     cancel() {

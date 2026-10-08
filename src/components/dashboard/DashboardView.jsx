@@ -1,4 +1,4 @@
-import { useMemo } from "react";
+import { useEffect, useMemo, useRef } from "react";
 
 import {
   BarChart,
@@ -93,6 +93,31 @@ export default function DashboardView({
     name: String(r.day), 
     pct: r.pct === null ? 0 : Math.round(r.pct)
   }));
+
+    const lastDataRow = useMemo(() => {
+    for (let i = dailyRows.length - 1; i >= 0; i--) {
+      if (dailyRows[i].hasData) return dailyRows[i];
+    }
+    return null;
+  }, [dailyRows]);
+
+  const lastDataRowRef = useRef(null);
+
+  useEffect(() => {
+    // Khusus HP: saat dashboard dibuka atau sheet/bulan berubah,
+    // scroll otomatis ke data terakhir yang terisi.
+    if (window.innerWidth > 768) return;
+
+    const id = window.setTimeout(() => {
+      lastDataRowRef.current?.scrollIntoView({
+        behavior: "smooth",
+        block: "center",
+        inline: "nearest",
+      });
+    }, 180);
+
+    return () => window.clearTimeout(id);
+  }, [sheetId, mk, lastDataRow?.iso]);
 
   const monthOptions = useMemo(() => {
     const options = [];
@@ -205,8 +230,21 @@ Cetak
             </tr>
           </thead>
           <tbody>
-            {dailyRows.map((r) => (
-              <tr key={r.iso} onClick={() => setDate(r.iso)} style={{ borderTop: `1px solid ${C.line}`, cursor: "pointer" }} className="no-print-hover">
+           {dailyRows.map((r) => (
+                <tr
+                  key={r.iso}
+                  ref={lastDataRow?.iso === r.iso ? lastDataRowRef : null}
+                  onClick={() => setDate(r.iso)}
+                  style={{
+                    borderTop: `1px solid ${C.line}`,
+                    cursor: "pointer",
+                    background:
+                      lastDataRow?.iso === r.iso
+                        ? "var(--color-accent-soft)"
+                        : "transparent",
+                  }}
+                  className="no-print-hover"
+                >
                 <td style={dashTd}>{r.day}</td>
                 <td style={{ ...dashTd, color: statusColor(r.pct), fontWeight: 600 }} className="num-field">
                   {r.pct === null ? "–" : `${r.pct.toFixed(0)}%`}

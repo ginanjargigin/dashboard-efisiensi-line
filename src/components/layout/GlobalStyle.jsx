@@ -1,4 +1,3 @@
-
 import { C } from "../../constants/appConstants";
 
 export default function GlobalStyle() {
@@ -400,7 +399,7 @@ export default function GlobalStyle() {
           flex: 1 1 150px;
           max-width: 180px;
         }
-
+      }
               
       /* =========================================
          DESKTOP SIDEBAR
@@ -629,7 +628,6 @@ export default function GlobalStyle() {
         .desktop-app-layout .sheet-tabs-shell {
           display: block;
         }
-      }
       }
 
       /* =========================================

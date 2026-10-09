@@ -210,21 +210,28 @@ const best = rowsWithAchievement.length
         minWidth: 0,
       }}
     >
+      
       {/* FILTER DAN TOMBOL */}
       <div
-        className="no-print"
+        className="no-print dashboard-toolbar"
         style={{
           display: "flex",
           gap: 10,
           alignItems: "center",
           marginBottom: 18,
           flexWrap: "wrap",
+          minWidth: 0,
         }}
       >
         <select
+          className="dashboard-line-select"
           value={sheetId}
           onChange={(event) => setSheetId(event.target.value)}
-          style={controlStyle}
+          style={{
+            ...controlStyle,
+            height: 42,
+            boxSizing: "border-box",
+          }}
         >
           {sheets.map((item) => (
             <option key={item.id} value={item.id}>
@@ -234,11 +241,18 @@ const best = rowsWithAchievement.length
         </select>
 
         <select
+          className="dashboard-month-select"
           value={mk}
           onChange={(event) =>
             setDate(`${event.target.value}-01`)
           }
-          style={{ ...controlStyle, color: C.amber, fontWeight: 600 }}
+          style={{
+            ...controlStyle,
+            height: 42,
+            boxSizing: "border-box",
+            color: C.amber,
+            fontWeight: 600,
+          }}
         >
           {monthOptions.map((option) => (
             <option key={option.key} value={option.key}>
@@ -247,63 +261,27 @@ const best = rowsWithAchievement.length
           ))}
         </select>
 
-        <div
-          style={{
-            marginLeft: "auto",
-            display: "flex",
-            gap: 10,
-            justifyContent: "flex-end",
-            flexWrap: "wrap",
-            width: "100%",
-          }}
-        >
+        <div className="dashboard-actions">
           <button
+            className="dashboard-action-button dashboard-export-button"
             onClick={exportDbCsv}
-            style={{
-              flex: "1 1 150px",
-              maxWidth: 180,
-              background: "#16A34A",
-              color: "#fff",
-              border: "none",
-              borderRadius: 10,
-              padding: "10px 16px",
-              display: "flex",
-              justifyContent: "center",
-              alignItems: "center",
-              gap: 8,
-              cursor: "pointer",
-              fontWeight: 700,
-              fontSize: 14,
-            }}
           >
-            <FileSpreadsheet size={18} />
-            Export CSV
+            <FileSpreadsheet size={17} />
+            <span>Export CSV</span>
           </button>
 
           <button
+            className="dashboard-action-button dashboard-print-button"
             onClick={() => window.print()}
-            style={{
-              flex: "1 1 150px",
-              maxWidth: 180,
-              background: C.amber,
-              color: "#1A1D20",
-              border: "none",
-              borderRadius: 10,
-              padding: "10px 16px",
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "center",
-              gap: 8,
-              cursor: "pointer",
-              fontWeight: 700,
-              fontSize: 14,
-            }}
           >
-            <Printer size={18} />
-            Cetak
+            <Printer size={17} />
+            <span>Cetak</span>
           </button>
         </div>
       </div>
+
+      {/* DESKTOP: TABEL KIRI, KALKULATOR KANAN */}
+
 
       {/* DESKTOP: TABEL KIRI, KALKULATOR KANAN */}
       <div className="dashboard-main-layout">

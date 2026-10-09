@@ -214,6 +214,34 @@ button:active{
 .sheet-tabs-scroll::-webkit-scrollbar-thumb:hover {
   background: #aaa;
 }
+
+
+/* LAYOUT DASHBOARD DESKTOP */
+.dashboard-main-layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1.85fr) minmax(320px, 0.95fr);
+  align-items: start;
+  gap: 22px;
+}
+
+.capacity-panel {
+  position: sticky;
+  top: 16px;
+  max-height: calc(100vh - 32px);
+  overflow-y: auto;
+}
+
+/* TABLET DAN MOBILE: PERTAHANKAN LAYOUT LAMA */
+@media (max-width: 900px) {
+  .dashboard-main-layout {
+    display: block;
+  }
+
+  .capacity-panel {
+    display: none !important;
+  }
+}
+
       @media print {
         .no-print { display: none !important; }
         body, .print-area { background: #fff !important; color: #111 !important; }

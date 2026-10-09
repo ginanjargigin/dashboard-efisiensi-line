@@ -544,6 +544,15 @@ export default function InputView({
         ))}
       </div>
 
+            
+      {/* GRAFIK PENCAPAIAN BULANAN */}
+      <MonthlyAchievementChart
+        sheet={sheet}
+        date={date}
+        monthData={monthData}
+      />
+
+
       {/* FILLED DAYS */}
       {filledDays.length > 0 && (
         <div style={{ marginTop: 26 }}>

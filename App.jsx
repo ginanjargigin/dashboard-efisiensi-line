@@ -245,6 +245,7 @@ const {
           mk={mk}
           setDate={setDate}
           monthData={monthData}
+          allMonths={db.months}
           exportDbCsv={exportDbCsv}
         />
       )}

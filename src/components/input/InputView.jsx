@@ -1,3 +1,6 @@
+import MonthlyAchievementChart from "./MonthlyAchievementChart";
+
+
 import {
   Trash2,
   CalendarCheck,

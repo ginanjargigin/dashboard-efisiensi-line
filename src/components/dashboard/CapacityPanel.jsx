@@ -3,18 +3,19 @@ import { useEffect, useMemo, useState } from "react";
 import { Clock3, Package, Boxes, CalendarDays } from "lucide-react";
 import {
   pad2,
- monthLabel,
-  todayISO,
+  monthLabel,
+  todayISO, 
 } from "../../utils/appUtils";
 import { C } from "../../constants/appConstants";
 
 const STORAGE_KEY = "papan-capacity-settings-v1";
 
+
 function getInitialSettings(sheets) {
   const defaults = {
     lineIds: sheets.slice(0, 2).map((s) => s.id),
     period: "day",
-    date:date: todayISO(),
+    date: todayISO(),
   };
 
   try {
@@ -45,6 +46,8 @@ function getInitialSettings(sheets) {
     return defaults;
   }
 }
+
+
 
 function getPeriodDates(date, period) {
   const selected = new Date(`${date}T00:00:00`);

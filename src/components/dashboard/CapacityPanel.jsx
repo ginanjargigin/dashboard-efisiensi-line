@@ -148,19 +148,22 @@ function formatDate(date) {
 }
 
 
+
 const selectStyle = {
   width: "100%",
   minWidth: 0,
-  height: 40,
+  height: 42,
   boxSizing: "border-box",
-  padding: "9px 10px",
+  padding: "9px 12px",
   borderRadius: 8,
   border: `1px solid ${C.line}`,
   background: C.panel2,
   color: C.text,
-  fontSize: 12,
+  fontSize: 11,
+  fontFamily: "inherit",
   textOverflow: "ellipsis",
 };
+
 
 
 const labelStyle = {

@@ -327,6 +327,33 @@ button:active{
   .capacity-panel {
     display: none !important;
   }
+
+  
+/* PENYESUAIAN DROPDOWN KALKULATOR */
+.capacity-panel select,
+.capacity-panel input[type="date"] {
+  width: 100%;
+  min-width: 0;
+  max-width: 100%;
+  box-sizing: border-box;
+  font-family: inherit;
+}
+
+.capacity-panel select {
+  font-size: 11px;
+  padding-left: 8px;
+  padding-right: 6px;
+}
+
+/* TOMBOL DASHBOARD SERAGAM */
+.dashboard-action-button {
+  height: 42px;
+  min-height: 42px;
+  width: 150px;
+  flex: 0 0 150px;
+  box-sizing: border-box;
+}
+
 }
 
       @media print {

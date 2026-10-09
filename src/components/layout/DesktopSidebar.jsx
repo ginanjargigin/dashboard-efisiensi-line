@@ -35,18 +35,21 @@ export default function DesktopSidebar({
     error: "Gagal menyimpan",
   }[saveState] || "";
 
-  return (
-    <aside
-      className={`desktop-sidebar ${
-        collapsed ? "is-collapsed" : ""
-      }`}
-      style={{
-        "--sidebar-bg": C.panel,
-        "--sidebar-border": C.line,
-        "--sidebar-text": C.text,
-        "--sidebar-muted": C.muted,
-        "--sidebar-accent": C.amber,
-      }}
+ 
+return (
+  <aside
+    className={`desktop-sidebar ${
+      collapsed ? "is-collapsed" : ""
+    }`}
+    style={{
+      "--sidebar-bg": C.panel,
+      "--sidebar-border": C.line,
+      "--sidebar-text": C.text,
+      "--sidebar-muted": C.muted,
+      "--sidebar-accent": C.amber,
+    }}
+  >
+
     >
       <div className="desktop-sidebar-brand">
         <div className="desktop-sidebar-logo">

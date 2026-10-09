@@ -400,6 +400,236 @@ export default function GlobalStyle() {
           flex: 1 1 150px;
           max-width: 180px;
         }
+
+              
+      /* =========================================
+         DESKTOP SIDEBAR
+      ========================================= */
+      
+      .desktop-app-layout {
+        display: grid;
+        grid-template-columns: 238px minmax(0, 1fr);
+        min-height: 100vh;
+        transition: grid-template-columns 0.2s ease;
+      }
+      
+      .desktop-app-layout.sidebar-collapsed {
+        grid-template-columns: 72px minmax(0, 1fr);
+      }
+      
+      .desktop-sidebar {
+        position: sticky;
+        top: 0;
+        height: 100vh;
+        display: flex;
+        flex-direction: column;
+        min-width: 0;
+        overflow: hidden;
+        background: var(--sidebar-bg);
+        border-right: 1px solid var(--sidebar-border);
+        z-index: 20;
+      }
+      
+      .desktop-sidebar-brand {
+        min-height: 76px;
+        display: flex;
+        align-items: center;
+        gap: 11px;
+        padding: 14px 16px;
+        border-bottom: 1px solid var(--sidebar-border);
+      }
+      
+      .desktop-sidebar-logo {
+        width: 38px;
+        height: 38px;
+        flex: 0 0 38px;
+        display: grid;
+        place-items: center;
+        border-radius: 10px;
+        background: var(--sidebar-accent);
+        color: var(--color-accent-text);
+        font-size: 20px;
+        font-weight: 800;
+      }
+      
+      .desktop-sidebar-brand-text {
+        min-width: 0;
+        overflow: hidden;
+      }
+      
+      .desktop-sidebar-brand-text strong {
+        display: block;
+        font-family: 'Barlow Condensed', sans-serif;
+        font-size: 19px;
+        white-space: nowrap;
+      }
+      
+      .desktop-sidebar-brand-text strong span {
+        color: var(--sidebar-accent);
+      }
+      
+      .desktop-sidebar-brand-text small {
+        display: block;
+        margin-top: 4px;
+        color: var(--sidebar-muted);
+        font-size: 10px;
+      }
+      
+      .desktop-sidebar-section {
+        padding: 16px 10px 8px;
+      }
+      
+      .desktop-sidebar-heading {
+        padding: 0 10px;
+        margin-bottom: 10px;
+        color: var(--sidebar-muted);
+        font-size: 10px;
+        font-weight: 700;
+        letter-spacing: 0.1em;
+      }
+      
+      .desktop-sidebar-item {
+        width: 100%;
+        min-height: 43px;
+        display: flex;
+        align-items: center;
+        gap: 11px;
+        padding: 0 12px;
+        margin-bottom: 5px;
+        border: 1px solid transparent;
+        border-radius: 9px;
+        background: transparent;
+        color: var(--sidebar-muted);
+        font-family: inherit;
+        font-size: 13px;
+        font-weight: 600;
+        text-align: left;
+        cursor: pointer;
+      }
+      
+      .desktop-sidebar-item:hover {
+        background: var(--color-hover);
+        color: var(--sidebar-text);
+        transform: none;
+      }
+      
+      .desktop-sidebar-item.is-active {
+        background: var(--color-accent-soft);
+        border-color: var(--sidebar-accent);
+        color: var(--sidebar-accent);
+      }
+      
+      .desktop-sidebar-item > svg {
+        flex: 0 0 19px;
+      }
+      
+      .desktop-sidebar-divider {
+        height: 1px;
+        margin: 4px 16px;
+        background: var(--sidebar-border);
+      }
+      
+      .desktop-sidebar-lines {
+        flex: 1;
+        min-height: 0;
+        overflow-y: auto;
+      }
+      
+      .desktop-sidebar-line {
+        min-height: 37px;
+        gap: 10px;
+        font-size: 12px;
+      }
+      
+      .desktop-sidebar-line-name {
+        flex: 1;
+        min-width: 0;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+      }
+      
+      .desktop-sidebar-current {
+        font-size: 10px;
+        font-weight: 700;
+      }
+      
+      .desktop-sidebar-footer {
+        padding: 10px;
+        border-top: 1px solid var(--sidebar-border);
+      }
+      
+      .desktop-sidebar-save {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        padding: 7px 5px 12px;
+        color: var(--sidebar-muted);
+        font-size: 10px;
+      }
+      
+      .desktop-sidebar-save.has-error {
+        color: var(--color-bad, #E5555C);
+      }
+      
+      .desktop-sidebar-collapse {
+        width: 100%;
+        min-height: 38px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 8px;
+        border: 1px solid var(--sidebar-border);
+        border-radius: 8px;
+        background: transparent;
+        color: var(--sidebar-muted);
+        cursor: pointer;
+      }
+      
+      .desktop-sidebar-collapse:hover {
+        background: var(--color-hover);
+        transform: none;
+      }
+      
+      .desktop-app-content {
+        min-width: 0;
+        overflow-x: clip;
+      }
+      
+      .desktop-app-layout .sheet-tabs-shell {
+        display: none;
+      }
+      
+      .desktop-app-layout .desktop-navigation-shell {
+        display: none;
+      }
+      
+      .desktop-app-layout .desktop-sidebar.is-collapsed {
+        width: 72px;
+      }
+      
+      /* =========================================
+         RESPONSIVE
+      ========================================= */
+      
+      @media (max-width: 768px) {
+        .desktop-app-layout {
+          display: block;
+          min-height: 0;
+        }
+      
+        .desktop-app-layout > .desktop-sidebar {
+          display: none;
+        }
+      
+        .desktop-app-content {
+          overflow: visible;
+        }
+      
+        .desktop-app-layout .sheet-tabs-shell {
+          display: block;
+        }
+      }
       }
 
       /* =========================================

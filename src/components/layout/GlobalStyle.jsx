@@ -231,6 +231,93 @@ button:active{
   overflow-y: auto;
 }
 
+
+/* DASHBOARD: FILTER DAN TOMBOL DESKTOP */
+.dashboard-line-select {
+  width: 220px;
+  flex: 0 1 220px;
+}
+
+.dashboard-month-select {
+  width: 160px;
+  flex: 0 0 160px;
+}
+
+.dashboard-actions {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 10px;
+  margin-left: auto;
+  flex-wrap: nowrap;
+  width: auto;
+  min-width: 0;
+}
+
+.dashboard-action-button {
+  height: 42px;
+  width: 150px;
+  flex: 0 0 150px;
+  box-sizing: border-box;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 0 12px;
+  border: none;
+  border-radius: 9px;
+  font-family: inherit;
+  font-size: 13px;
+  font-weight: 700;
+  white-space: nowrap;
+  cursor: pointer;
+}
+
+.dashboard-export-button {
+  background: #16A34A;
+  color: #FFFFFF;
+}
+
+.dashboard-print-button {
+  background: #38BDF8;
+  color: #0B1220;
+}
+
+.dashboard-action-button:hover {
+  filter: brightness(1.08);
+}
+
+/* MOBILE: TETAP RESPONSIF */
+@media (max-width: 768px) {
+  .dashboard-toolbar {
+    gap: 8px !important;
+  }
+
+  .dashboard-line-select {
+    width: auto;
+    flex: 1 1 180px;
+  }
+
+  .dashboard-month-select {
+    width: auto;
+    flex: 1 1 140px;
+  }
+
+  .dashboard-actions {
+    margin-left: 0;
+    width: 100%;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+
+  .dashboard-action-button {
+    width: auto;
+    flex: 1 1 150px;
+    max-width: 180px;
+  }
+}
+
+
 /* TABLET DAN MOBILE: PERTAHANKAN LAYOUT LAMA */
 @media (max-width: 900px) {
   .dashboard-main-layout {

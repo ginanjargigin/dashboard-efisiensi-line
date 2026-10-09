@@ -147,16 +147,21 @@ function formatDate(date) {
   );
 }
 
+
 const selectStyle = {
   width: "100%",
   minWidth: 0,
-  padding: "10px 11px",
+  height: 40,
+  boxSizing: "border-box",
+  padding: "9px 10px",
   borderRadius: 8,
   border: `1px solid ${C.line}`,
   background: C.panel2,
   color: C.text,
   fontSize: 12,
+  textOverflow: "ellipsis",
 };
+
 
 const labelStyle = {
   display: "block",

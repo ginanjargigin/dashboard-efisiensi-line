@@ -3,8 +3,8 @@ import { useEffect, useMemo, useState } from "react";
 import { Clock3, Package, Boxes, CalendarDays } from "lucide-react";
 import {
   pad2,
-  daysInMonth,
-  monthLabel,
+ monthLabel,
+  todayISO,
 } from "../../utils/appUtils";
 import { C } from "../../constants/appConstants";
 
@@ -14,7 +14,7 @@ function getInitialSettings(sheets) {
   const defaults = {
     lineIds: sheets.slice(0, 2).map((s) => s.id),
     period: "day",
-    date: new Date().toLocaleDateString("en-CA"),
+    date:date: todayISO(),
   };
 
   try {

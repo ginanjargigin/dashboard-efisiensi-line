@@ -211,81 +211,81 @@ const best = rowsWithAchievement.length
       }}
     >
       
-      {/* FILTER DAN TOMBOL */}
-      <div
-        className="no-print dashboard-toolbar"
-        style={{
-          display: "flex",
-          gap: 10,
-          alignItems: "center",
-          marginBottom: 18,
-          flexWrap: "wrap",
-          minWidth: 0,
-        }}
-      >
-        <select
-          className="dashboard-line-select"
-          value={sheetId}
-          onChange={(event) => setSheetId(event.target.value)}
-          style={{
-            ...controlStyle,
-            height: 42,
-            boxSizing: "border-box",
-          }}
-        >
-          {sheets.map((item) => (
-            <option key={item.id} value={item.id}>
-              {item.name}
-            </option>
-          ))}
-        </select>
-
-        <select
-          className="dashboard-month-select"
-          value={mk}
-          onChange={(event) =>
-            setDate(`${event.target.value}-01`)
-          }
-          style={{
-            ...controlStyle,
-            height: 42,
-            boxSizing: "border-box",
-            color: C.amber,
-            fontWeight: 600,
-          }}
-        >
-          {monthOptions.map((option) => (
-            <option key={option.key} value={option.key}>
-              {option.label}
-            </option>
-          ))}
-        </select>
-
-        <div className="dashboard-actions">
-          <button
-            className="dashboard-action-button dashboard-export-button"
-            onClick={exportDbCsv}
-          >
-            <FileSpreadsheet size={17} />
-            <span>Export CSV</span>
-          </button>
-
-          <button
-            className="dashboard-action-button dashboard-print-button"
-            onClick={() => window.print()}
-          >
-            <Printer size={17} />
-            <span>Cetak</span>
-          </button>
-        </div>
-      </div>
-
-      {/* DESKTOP: TABEL KIRI, KALKULATOR KANAN */}
-
-
-      {/* DESKTOP: TABEL KIRI, KALKULATOR KANAN */}
+     
+      {/* DESKTOP: FILTER + TABEL DI KIRI, KALKULATOR DI KANAN */}
       <div className="dashboard-main-layout">
         <section style={{ minWidth: 0 }}>
+          {/* FILTER DAN TOMBOL */}
+          <div
+            className="no-print dashboard-toolbar"
+            style={{
+              display: "flex",
+              gap: 10,
+              alignItems: "center",
+              marginBottom: 18,
+              flexWrap: "wrap",
+              minWidth: 0,
+            }}
+          >
+            <select
+              className="dashboard-line-select"
+              value={sheetId}
+              onChange={(event) => setSheetId(event.target.value)}
+              style={{
+                ...controlStyle,
+                height: 46,
+                boxSizing: "border-box",
+              }}
+            >
+              {sheets.map((item) => (
+                <option key={item.id} value={item.id}>
+                  {item.name}
+                </option>
+              ))}
+            </select>
+
+            <select
+              className="dashboard-month-select"
+              value={mk}
+              onChange={(event) =>
+                setDate(`${event.target.value}-01`)
+              }
+              style={{
+                ...controlStyle,
+                height: 46,
+                boxSizing: "border-box",
+                color: C.amber,
+                fontWeight: 600,
+              }}
+            >
+              {monthOptions.map((option) => (
+                <option key={option.key} value={option.key}>
+                  {option.label}
+                </option>
+              ))}
+            </select>
+
+            <div className="dashboard-actions">
+              <button
+                type="button"
+                className="dashboard-action-button dashboard-export-button"
+                onClick={exportDbCsv}
+              >
+                <FileSpreadsheet size={18} />
+                <span>Export CSV</span>
+              </button>
+
+              <button
+                type="button"
+                className="dashboard-action-button dashboard-print-button"
+                onClick={() => window.print()}
+              >
+                <Printer size={18} />
+                <span>Cetak</span>
+              </button>
+            </div>
+          </div>
+
           <div
             style={{
               fontFamily: "'Barlow Condensed', sans-serif",

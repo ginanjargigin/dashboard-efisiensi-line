@@ -1,4 +1,4 @@
-```jsx
+
 import {
   Keyboard,
   LayoutDashboard,
@@ -183,4 +183,3 @@ return (
     </aside>
   );
 }
-```

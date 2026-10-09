@@ -22,13 +22,13 @@ import InputView from "./src/components/input/InputView";
 import SettingsView from "./src/components/settings/SettingsView";
 import TopBar from "./src/components/layout/TopBar";
 import DashboardView from "./src/components/dashboard/DashboardView";
+import CapacityPanel from "./src/components/dashboard/CapacityPanel";
+import MobileNavigation from "./src/components/layout/MobileNavigation";
 import GlobalStyle from "./src/components/layout/GlobalStyle";
 
 import {
   AlertTriangle,
 } from "lucide-react";
-
-
 
 /* ----------------------------------- App ------------------------------------- */
 
@@ -37,69 +37,54 @@ export default function App() {
   const [sheetId, setSheetId] = useState(null);
   const [date, setDate] = useState(todayISO());
   const [view, setView] = useState("input");
-   const [theme, setTheme] = useState(
+  const [theme, setTheme] = useState(
     () => localStorage.getItem("papan-theme") || "amber"
   );
   const [ready, setReady] = useState(false);
   const [loadError, setLoadError] = useState(null);
   const [saveState, setSaveState] = useState("idle");
 
-    useEffect(() => {
-    document.documentElement.setAttribute(
-      "data-theme",
-      theme
-    );
-
-    localStorage.setItem(
-      "papan-theme",
-      theme
-    );
+  useEffect(() => {
+    document.documentElement.setAttribute("data-theme", theme);
+    localStorage.setItem("papan-theme", theme);
   }, [theme]);
 
-
   const mk = monthKeyOf(date);
-
-
 
   useEffect(() => {
     (async () => {
       try {
         const remote = await initializeDb();
-
         setDb(remote);
         setSheetId(remote.sheets[0].id);
         setReady(true);
       } catch (e) {
         console.error("Supabase connection error:", e);
 
-       
         const message =
           e?.message ||
           "Tidak dapat terhubung ke database Supabase. Periksa koneksi internet.";
-        
+
         setLoadError(message);
         setReady(true);
       }
     })();
   }, []);
 
-const saveDbToSupabaseOnly = async (nextDb) => {
-  const october = nextDb?.months?.["2026-10"] || {};
+  const saveDbToSupabaseOnly = async (nextDb) => {
+    const october = nextDb?.months?.["2026-10"] || {};
 
-  console.log(
-    "SAVE DEBUG 2026-10-01:",
-    Object.entries(october).map(
-      ([id, sheetData]) => ({
+    console.log(
+      "SAVE DEBUG 2026-10-01:",
+      Object.entries(october).map(([id, sheetData]) => ({
         sheetId: id,
         data: sheetData?.["2026-10-01"],
-      })
-    )
-  );
+      }))
+    );
 
-  await saveDbToSupabase(nextDb);
-
-  console.log("SUPABASE PRIMARY SAVE: SUCCESS");
-};
+    await saveDbToSupabase(nextDb);
+    console.log("SUPABASE PRIMARY SAVE: SUCCESS");
+  };
 
   const saveSchedulerRef = useRef(null);
 
@@ -126,29 +111,31 @@ const saveDbToSupabaseOnly = async (nextDb) => {
   };
 
   const monthData = (db && db.months[mk]) || {};
-const {
-  updateEntry,
-  updateNgEntry,
-  updateNote,
-  clearEntry,
-  addSheet,
-  removeSheet,
-  updateSheetName,
-  addMetric,
-  updateMetric,
-  removeMetric,
-  moveSheet,
-  addNgType,
-  updateNgType,
-  removeNgType,
-} = useAppActions({
-  setDb,
-  setSheetId,
-  sheetId,
-  mk,
-  scheduleSave,
-  saveScheduler: saveSchedulerRef.current,
-});
+
+  const {
+    updateEntry,
+    updateNgEntry,
+    updateNote,
+    clearEntry,
+    addSheet,
+    removeSheet,
+    updateSheetName,
+    addMetric,
+    updateMetric,
+    removeMetric,
+    moveSheet,
+    addNgType,
+    updateNgType,
+    removeNgType,
+  } = useAppActions({
+    setDb,
+    setSheetId,
+    sheetId,
+    mk,
+    scheduleSave,
+    saveScheduler: saveSchedulerRef.current,
+  });
+
   if (!ready || (!db && !loadError)) {
     return (
       <div
@@ -184,11 +171,7 @@ const {
           textAlign: "center",
         }}
       >
-        <AlertTriangle
-          color={C.bad}
-          size={28}
-        />
-
+        <AlertTriangle color={C.bad} size={28} />
         <div>{loadError}</div>
       </div>
     );
@@ -199,6 +182,9 @@ const {
   const currentSheet =
     sheets.find((s) => s.id === sheetId) ||
     sheets[0];
+
+  const hideSheetTabsOnMobile =
+    view === "capacity" || view === "settings";
 
   return (
     <div
@@ -212,29 +198,43 @@ const {
     >
       <GlobalStyle />
 
-      <TopBar
+      {/* Navigasi desktop lama tetap dipertahankan. */}
+      <div className="desktop-navigation-shell">
+        <TopBar
+          view={view}
+          setView={setView}
+          saveState={saveState}
+        />
+      </div>
+
+      {/* Drawer dan header ini hanya tampil pada mobile. */}
+      <MobileNavigation
         view={view}
         setView={setView}
         saveState={saveState}
       />
 
-      <SheetTabs
-        sheets={sheets}
-        sheetId={sheetId}
-        setSheetId={setSheetId}
-      />
+      <div
+        className={`sheet-tabs-shell${hideSheetTabsOnMobile ? " sheet-tabs-shell--hide-mobile" : ""}`}
+      >
+        <SheetTabs
+          sheets={sheets}
+          sheetId={sheetId}
+          setSheetId={setSheetId}
+        />
+      </div>
 
       {view === "input" && (
         <InputView
-        sheet={currentSheet}
-        date={date}
-        setDate={setDate}
-        monthData={monthData}
-        updateEntry={updateEntry}
-        updateNgEntry={updateNgEntry}
-        updateNote={updateNote}
-        clearEntry={clearEntry}
-      />
+          sheet={currentSheet}
+          date={date}
+          setDate={setDate}
+          monthData={monthData}
+          updateEntry={updateEntry}
+          updateNgEntry={updateNgEntry}
+          updateNote={updateNote}
+          clearEntry={clearEntry}
+        />
       )}
 
       {view === "dashboard" && (
@@ -250,24 +250,40 @@ const {
         />
       )}
 
-      {view === "settings" && (
-       <SettingsView
-        sheets={sheets}
-        addSheet={addSheet}
-        removeSheet={removeSheet}
-        updateSheetName={updateSheetName}
-        addMetric={addMetric}
-        updateMetric={updateMetric}
-        removeMetric={removeMetric}
-        moveSheet={moveSheet}
-        theme={theme}
-        setTheme={setTheme}
-        addNgType={addNgType}
-        updateNgType={updateNgType}
-        removeNgType={removeNgType}
-      />
+      {view === "capacity" && (
+        <main className="capacity-page">
+          <CapacityPanel
+            sheets={sheets}
+            allMonths={db.months}
+          />
+        </main>
       )}
+
+      {view === "settings" && (
+        <SettingsView
+          sheets={sheets}
+          addSheet={addSheet}
+          removeSheet={removeSheet}
+          updateSheetName={updateSheetName}
+          addMetric={addMetric}
+          updateMetric={updateMetric}
+          removeMetric={removeMetric}
+          moveSheet={moveSheet}
+          theme={theme}
+          setTheme={setTheme}
+          addNgType={addNgType}
+          updateNgType={updateNgType}
+          removeNgType={removeNgType}
+        />
+      )}
+
+      <style>{`
+        @media (max-width: 768px) {
+          .sheet-tabs-shell--hide-mobile {
+            display: none !important;
+          }
+        }
+      `}</style>
     </div>
   );
 }
-

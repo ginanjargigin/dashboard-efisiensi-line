@@ -1,3 +1,5 @@
+import DesktopSidebar from "./src/components/layout/DesktopSidebar";
+
 import React, {
   useState,
   useEffect,
@@ -37,6 +39,16 @@ export default function App() {
   const [sheetId, setSheetId] = useState(null);
   const [date, setDate] = useState(todayISO());
   const [view, setView] = useState("input");
+  const [sidebarCollapsed, setSidebarCollapsed] = useState(
+  () => localStorage.getItem("papan-sidebar-collapsed") === "true"
+);
+
+useEffect(() => {
+  localStorage.setItem(
+    "papan-sidebar-collapsed",
+    String(sidebarCollapsed)
+  );
+}, [sidebarCollapsed]);
   const [theme, setTheme] = useState(
     () => localStorage.getItem("papan-theme") || "amber"
   );
@@ -198,84 +210,105 @@ export default function App() {
     >
       <GlobalStyle />
 
-      {/* Navigasi desktop lama tetap dipertahankan. */}
-      <div className="desktop-navigation-shell">
-        <TopBar
+
+      {/* DESKTOP SIDEBAR + KONTEN */}
+      <div
+        className={`desktop-app-layout ${
+          sidebarCollapsed ? "sidebar-collapsed" : ""
+        }`}
+      >
+        <DesktopSidebar
           view={view}
           setView={setView}
+          sheets={sheets}
+          sheetId={sheetId}
+          setSheetId={setSheetId}
+          collapsed={sidebarCollapsed}
+          setCollapsed={setSidebarCollapsed}
           saveState={saveState}
         />
-      </div>
 
-      {/* Drawer dan header ini hanya tampil pada mobile. */}
-      <MobileNavigation
-        view={view}
-        setView={setView}
-        saveState={saveState}
-      />
-
-      <div
-        className={`sheet-tabs-shell${hideSheetTabsOnMobile ? " sheet-tabs-shell--hide-mobile" : ""}`}
-      >
-        <SheetTabs
-          sheets={sheets}
-          sheetId={sheetId}
-          setSheetId={setSheetId}
-        />
-      </div>
-
-      {view === "input" && (
-        <InputView
-          sheet={currentSheet}
-          date={date}
-          setDate={setDate}
-          monthData={monthData}
-          updateEntry={updateEntry}
-          updateNgEntry={updateNgEntry}
-          updateNote={updateNote}
-          clearEntry={clearEntry}
-        />
-      )}
-
-      {view === "dashboard" && (
-        <DashboardView
-          sheets={sheets}
-          sheetId={sheetId}
-          setSheetId={setSheetId}
-          mk={mk}
-          setDate={setDate}
-          monthData={monthData}
-          allMonths={db.months}
-          exportDbCsv={exportDbCsv}
-        />
-      )}
-
-      {view === "capacity" && (
-        <main className="capacity-page">
-          <CapacityPanel
-            sheets={sheets}
-            allMonths={db.months}
+        <div className="desktop-app-content">
+          {/* NAVIGASI MOBILE */}
+          <MobileNavigation
+            view={view}
+            setView={setView}
+            saveState={saveState}
           />
-        </main>
-      )}
 
-      {view === "settings" && (
-        <SettingsView
-          sheets={sheets}
-          addSheet={addSheet}
-          removeSheet={removeSheet}
-          updateSheetName={updateSheetName}
-          addMetric={addMetric}
-          updateMetric={updateMetric}
-          removeMetric={removeMetric}
-          moveSheet={moveSheet}
-          theme={theme}
-          setTheme={setTheme}
-          addNgType={addNgType}
-          updateNgType={updateNgType}
-          removeNgType={removeNgType}
-        />
-      )}
+          {/* DAFTAR LINE UNTUK MOBILE */}
+          <div
+            className={`sheet-tabs-shell${
+              hideSheetTabsOnMobile
+                ? " sheet-tabs-shell--hide-mobile"
+                : ""
+            }`}
+          >
+            <SheetTabs
+              sheets={sheets}
+              sheetId={sheetId}
+              setSheetId={setSheetId}
+            />
+          </div>
+
+          {/* HALAMAN INPUT */}
+          {view === "input" && (
+            <InputView
+              sheet={currentSheet}
+              date={date}
+              setDate={setDate}
+              monthData={monthData}
+              updateEntry={updateEntry}
+              updateNgEntry={updateNgEntry}
+              updateNote={updateNote}
+              clearEntry={clearEntry}
+            />
+          )}
+
+          {/* HALAMAN DASHBOARD */}
+          {view === "dashboard" && (
+            <DashboardView
+              sheets={sheets}
+              sheetId={sheetId}
+              setSheetId={setSheetId}
+              mk={mk}
+              setDate={setDate}
+              monthData={monthData}
+              allMonths={db.months}
+              exportDbCsv={exportDbCsv}
+            />
+          )}
+
+          {/* KALKULATOR KAPASITAS */}
+          {view === "capacity" && (
+            <main className="capacity-page">
+              <CapacityPanel
+                sheets={sheets}
+                allMonths={db.months}
+              />
+            </main>
+          )}
+
+          {/* HALAMAN PENGATURAN */}
+          {view === "settings" && (
+            <SettingsView
+              sheets={sheets}
+              addSheet={addSheet}
+              removeSheet={removeSheet}
+              updateSheetName={updateSheetName}
+              addMetric={addMetric}
+              updateMetric={updateMetric}
+              removeMetric={removeMetric}
+              moveSheet={moveSheet}
+              theme={theme}
+              setTheme={setTheme}
+              addNgType={addNgType}
+              updateNgType={updateNgType}
+              removeNgType={removeNgType}
+            />
+          )}
+        </div>
+      </div>
 
       <style>{`
         @media (max-width: 768px) {
@@ -284,6 +317,7 @@ export default function App() {
           }
         }
       `}</style>
+
     </div>
   );
 }

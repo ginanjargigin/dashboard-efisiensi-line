@@ -133,11 +133,15 @@ export default function DashboardView({
       ) / withData.length
     : null;
 
-  const best = withData.length
-    ? withData.reduce((a, b) =>
-        (b.pct ?? -1) > (a.pct ?? -1) ? b : a
-      )
-    : null;
+ const rowsWithAchievement = withData.filter(
+  (row) => row.pct !== null
+);
+
+const best = rowsWithAchievement.length
+  ? rowsWithAchievement.reduce((a, b) =>
+      b.pct > a.pct ? b : a
+    )
+  : null;
 
   const lastDataRow =
     [...dailyRows].reverse().find((row) => row.hasData) || null;

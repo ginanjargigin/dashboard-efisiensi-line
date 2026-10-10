@@ -15,10 +15,10 @@ export default function GlobalStyle() {
         --color-panel-2: #2B3033;
         --color-line: #383E42;
 
-        --color-accent: #F2A93B;
-        --color-accent-soft: rgba(242, 169, 59, 0.12);
-        --color-accent-focus: rgba(242, 169, 59, 0.18);
-        --color-accent-shadow: rgba(242, 169, 59, 0.30);
+        --color-accent: #A87950;
+        --color-accent-soft: rgba(168, 121, 80, 0.12);
+        --color-accent-focus: rgba(168, 121, 80, 0.18);
+        --color-accent-shadow: rgba(168, 121, 80, 0.30);
 
         --color-input: #2B3033;
         --color-card-shadow: rgba(0, 0, 0, 0.20);

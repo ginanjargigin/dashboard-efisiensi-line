@@ -522,6 +522,7 @@ return (
         </button>
       </div>
 
+     
       {/* METRIC CARDS */}
       <div
         style={{
@@ -541,26 +542,15 @@ return (
           />
         ))}
       </div>
-
-      
     </div>
 
+    {/* PANEL KANAN: GRAFIK DAN RIWAYAT */}
     <div className="input-view-right">
-      {/* GRAFIK PENCAPAIAN BULANAN */}
       <MonthlyAchievementChart
         sheet={sheet}
         date={date}
         monthData={monthData}
       />
-
-            
-      {/* GRAFIK PENCAPAIAN BULANAN */}
-      <MonthlyAchievementChart
-        sheet={sheet}
-        date={date}
-        monthData={monthData}
-      />
-
 
       {/* FILLED DAYS */}
       {filledDays.length > 0 && (
@@ -573,11 +563,6 @@ return (
               textTransform: "uppercase",
               letterSpacing: 0.6,
             }}
-
-      /* penutup blok FILLED DAYS tetap di sini */
-    </div>
-  </div>
-);
           >
             Tanggal terisi bulan ini
           </div>
@@ -604,15 +589,11 @@ return (
                     qtyStd(v.menit, m.ct)
                   );
                 })
-                .filter(
-                  (p) => p !== null
-                );
+                .filter((p) => p !== null);
 
               const avg = pcts.length
-                ? pcts.reduce(
-                    (a, b) => a + b,
-                    0
-                  ) / pcts.length
+                ? pcts.reduce((a, b) => a + b, 0) /
+                  pcts.length
                 : null;
 
               return (
@@ -625,9 +606,7 @@ return (
                     fontSize: 12,
                     cursor: "pointer",
                     border: `1px solid ${
-                      d === date
-                        ? C.amber
-                        : C.line
+                      d === date ? C.amber : C.line
                     }`,
                     background:
                       d === date
@@ -648,8 +627,7 @@ return (
                       width: 6,
                       height: 6,
                       borderRadius: "50%",
-                      background:
-                        statusColor(avg),
+                      background: statusColor(avg),
                       display: "inline-block",
                     }}
                   />
@@ -660,5 +638,7 @@ return (
         </div>
       )}
     </div>
-  );
+  </div>
+);
 }
+

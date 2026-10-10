@@ -31,6 +31,15 @@ export default function SettingsView({
   const [ngFeedback, setNgFeedback] = useState({});
   const [newSheetName, setNewSheetName] = useState("");
   const [selectedSheetId, setSelectedSheetId] = useState(
+      sheets[0]?.id ?? null
+    );
+
+const activeSheetId = sheets.some(
+  (s) => s.id === selectedSheetId
+)
+  ? selectedSheetId
+  : sheets[0]?.id ?? null;
+  const [selectedSheetId, setSelectedSheetId] = useState(
     sheets[0]?.id ?? null
   );
   
@@ -96,6 +105,60 @@ export default function SettingsView({
         </button>
       </div>
 
+            {/* DAFTAR LINE HORIZONTAL */}
+      <div
+        style={{
+          display: "grid",
+          gridTemplateColumns: "repeat(auto-fit, minmax(145px, 1fr))",
+          gap: 10,
+          marginBottom: 16,
+        }}
+      >
+        {sheets.map((s) => {
+          const active = s.id === activeSheetId;
+
+          return (
+            <button
+              key={s.id}
+              type="button"
+              onClick={() => setSelectedSheetId(s.id)}
+              style={{
+                minWidth: 0,
+                minHeight: 58,
+                padding: 12,
+                border: `1px solid ${
+                  active ? C.amber : C.line
+                }`,
+                borderRadius: 10,
+                background: active
+                  ? "var(--color-accent-soft)"
+                  : C.panel,
+                color: active ? C.amber : C.text,
+                fontSize: 13,
+                fontWeight: 600,
+                textAlign: "left",
+                overflowWrap: "anywhere",
+                cursor: "pointer",
+              }}
+            >
+              {s.name}
+
+              {active && (
+                <div
+                  style={{
+                    fontSize: 10,
+                    marginTop: 5,
+                    color: C.amber,
+                  }}
+                >
+                  ● Dipilih
+                </div>
+              )}
+            </button>
+          );
+        })}
+      </div>
+      
       {/* DAFTAR LINE */}
       <div
         style={{
@@ -104,7 +167,12 @@ export default function SettingsView({
           gap: 14,
         }}
       >
-        {sheets.map((s, idx) => {
+                {sheets
+          .filter((s) => s.id === activeSheetId)
+          .map((s) => {
+            const idx = sheets.findIndex(
+              (item) => item.id === s.id
+            );
           const ngTypes = Array.isArray(s.ngTypes)
             ? s.ngTypes
             : [];

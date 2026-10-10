@@ -665,6 +665,58 @@ export default function GlobalStyle() {
       }
       /* Akhir aturan @media print */
 
+            /* =========================================
+         SETTINGS: HORIZONTAL LINE CARDS
+      ========================================= */
+
+      .settings-line-grid {
+        display: grid;
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+        gap: 10px;
+        margin-bottom: 16px;
+      }
+
+      .settings-line-card {
+        min-width: 0;
+        min-height: 62px;
+        padding: 12px;
+        border: 1px solid var(--color-line);
+        border-radius: 10px;
+        background: var(--color-panel);
+        color: var(--color-text);
+        font: inherit;
+        font-size: 13px;
+        font-weight: 600;
+        text-align: left;
+        overflow-wrap: anywhere;
+        cursor: pointer;
+      }
+
+      .settings-line-card.is-active {
+        border-color: var(--color-accent);
+        background: var(--color-accent-soft);
+        color: var(--color-accent);
+      }
+
+      @media (max-width: 1000px) {
+        .settings-line-grid {
+          grid-template-columns: repeat(3, minmax(0, 1fr));
+        }
+      }
+
+      @media (max-width: 600px) {
+        .settings-line-grid {
+          grid-template-columns: repeat(2, minmax(0, 1fr));
+          gap: 8px;
+        }
+
+        .settings-line-card {
+          min-height: 54px;
+          padding: 10px;
+          font-size: 12px;
+        }
+      }
+
       /* =========================================
          INPUT PAGE: DESKTOP TWO-COLUMN LAYOUT
       ========================================= */

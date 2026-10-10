@@ -60,8 +60,8 @@ export default function GlobalStyle() {
       ========================================= */
 
       [data-theme="factory-green"] {
-        --color-bg: #10191B;
-        --color-panel: #192426;
+        --color-bg: #0B0B0D;
+        --color-panel: #10201C;
         --color-panel-2: #202D2F;
         --color-line: #334447;
 

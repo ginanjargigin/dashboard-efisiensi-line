@@ -607,7 +607,7 @@ return (
           Tersimpan otomatis setelah perubahan.
         </div>
       </div>
-
+     </div>
 
        {/* PANEL KANAN: GRAFIK DAN RIWAYAT */}
     <div className="input-view-right">

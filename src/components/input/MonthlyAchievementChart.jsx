@@ -93,16 +93,35 @@ export default function MonthlyAchievementChart({
         borderRadius: 12,
         minWidth: 0,
       }}
-    >
+ 
       <div
         style={{
+          display: "flex",
+          alignItems: "baseline",
+          flexWrap: "wrap",
+          gap: 6,
           fontSize: 18,
           fontWeight: 700,
           fontFamily: "'Barlow Condensed', sans-serif",
           marginBottom: 4,
         }}
       >
-        Grafik Pencapaian Bulanan
+        <span>Grafik Pencapaian</span>
+
+        <span style={{ color: C.muted }}>Line</span>
+
+        <a
+          href="#"
+          onClick={(e) => e.preventDefault()}
+          style={{
+            color: C.accent,
+            font: "inherit",
+            textDecoration: "none",
+            cursor: "pointer",
+          }}
+        >
+          {sheet.name}
+        </a>
       </div>
 
       <div
@@ -112,8 +131,9 @@ export default function MonthlyAchievementChart({
           marginBottom: 12,
         }}
       >
-        {sheet.name} · {monthLabel(mk)}
+        Bulan {monthLabel(mk)}
       </div>
+
 
       <div style={{ height: 220, minWidth: 0 }}>
         <ResponsiveContainer width="100%" height="100%">

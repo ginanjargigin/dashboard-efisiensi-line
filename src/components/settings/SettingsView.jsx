@@ -43,13 +43,15 @@ const activeSheetId = sheets.some(
   
 
   return (
-    <div
+        <div
       style={{
         padding: "20px",
-        maxWidth: 720,
+        width: "100%",
+        maxWidth: "none",
         margin: "0 auto",
+        boxSizing: "border-box",
       }}
-    >
+        >
       <ThemeSelector
         theme={theme}
         setTheme={setTheme}
@@ -103,13 +105,18 @@ const activeSheetId = sheets.some(
         </button>
       </div>
 
+       {/* LAYOUT PENGATURAN 2 KOLOM */}
+      <div className="settings-two-column">
+        {/* KOLOM KIRI: PILIH LINE */}
+        <div className="settings-line-picker">
+          
             {/* DAFTAR LINE HORIZONTAL */}
-      <div
+        <div
+        className="settings-line-list"
         style={{
-          display: "grid",
-          gridTemplateColumns: "repeat(auto-fit, minmax(145px, 1fr))",
-          gap: 10,
-          marginBottom: 16,
+          display: "flex",
+          flexDirection: "column",
+          gap: 8,
         }}
       >
         {sheets.map((s) => {
@@ -156,7 +163,11 @@ const activeSheetId = sheets.some(
           );
         })}
       </div>
-      
+              </div>
+
+        {/* KOLOM KANAN: EDIT LINE TERPILIH */}
+        <div className="settings-line-editor">
+          
       {/* DAFTAR LINE */}
       <div
         style={{
@@ -671,6 +682,8 @@ const activeSheetId = sheets.some(
             </div>
           );
         })}
+      </div>
+        </div>
       </div>
     </div>
   );

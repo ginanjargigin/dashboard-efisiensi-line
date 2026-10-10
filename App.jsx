@@ -230,12 +230,14 @@ useEffect(() => {
 
         <div className="desktop-app-content">
           {/* NAVIGASI MOBILE */}
-          <MobileNavigation
+           <MobileNavigation
             view={view}
             setView={setView}
             saveState={saveState}
+            sheets={sheets}
+            sheetId={sheetId}
+            setSheetId={setSheetId}
           />
-
           {/* DAFTAR LINE UNTUK MOBILE */}
           <div
             className={`sheet-tabs-shell${
@@ -310,9 +312,9 @@ useEffect(() => {
         </div>
       </div>
 
-      <style>{`
+           <style>{`
         @media (max-width: 768px) {
-          .sheet-tabs-shell--hide-mobile {
+          .sheet-tabs-shell {
             display: none !important;
           }
         }

@@ -274,6 +274,85 @@ export default function GlobalStyle() {
         min-width: 0;
       }
 
+      
+      /* =========================================
+         DASHBOARD: HORIZONTAL LINE TABS
+      ========================================= */
+
+      .dashboard-line-tabs {
+        display: flex;
+        align-items: center;
+        gap: 6px;
+        flex: 1 1 420px;
+        min-width: 0;
+        max-width: 100%;
+        overflow-x: auto;
+        padding: 3px 2px 7px;
+        scrollbar-width: thin;
+        scrollbar-color: var(--color-line) transparent;
+      }
+
+      .dashboard-line-tabs::-webkit-scrollbar {
+        height: 5px;
+      }
+
+      .dashboard-line-tabs::-webkit-scrollbar-thumb {
+        background: var(--color-line);
+        border-radius: 6px;
+      }
+
+      .dashboard-line-tab {
+        flex: 0 0 auto;
+        min-height: 40px;
+        max-width: 210px;
+        padding: 0 14px;
+        border: 1px solid var(--color-line);
+        border-radius: 9px;
+        background: var(--color-panel);
+        color: var(--color-text);
+        font-family: inherit;
+        font-size: 12px;
+        font-weight: 600;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        cursor: pointer;
+      }
+
+      .dashboard-line-tab:hover {
+        border-color: var(--color-accent);
+        background: var(--color-accent-soft);
+        color: var(--color-accent);
+        transform: none;
+      }
+
+      .dashboard-line-tab.is-active {
+        border-color: var(--color-accent);
+        background: var(--color-accent-soft);
+        color: var(--color-accent);
+        box-shadow: inset 0 0 0 1px var(--color-accent);
+      }
+
+      .dashboard-line-tab.is-active:hover {
+        background: var(--color-accent-focus);
+      }
+
+      /* Outline bulan mengikuti tema aktif */
+      .dashboard-month-select {
+        flex: 0 0 170px;
+        width: 170px;
+        min-width: 0;
+        border: 1px solid var(--color-accent) !important;
+        transition:
+          border-color 0.2s ease,
+          box-shadow 0.2s ease;
+      }
+
+      .dashboard-month-select:focus {
+        border-color: var(--color-accent) !important;
+        box-shadow: 0 0 0 2px var(--color-accent-focus);
+      }
+
       /* =========================================
          DASHBOARD ACTION BUTTONS
       ========================================= */
@@ -374,6 +453,17 @@ export default function GlobalStyle() {
       @media (max-width: 768px) {
         .dashboard-toolbar {
           gap: 8px;
+        }
+        
+        .dashboard-line-tabs {
+          flex: 1 1 100%;
+          width: 100%;
+        }
+
+        .dashboard-month-select {
+          flex: 1 1 160px;
+          width: auto;
+          min-width: 140px;
         }
 
         .dashboard-line-select {

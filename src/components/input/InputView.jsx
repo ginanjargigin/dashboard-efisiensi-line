@@ -170,7 +170,7 @@ export default function InputView({
 
   
 return (
-
+   <div className="input-view-layout">
       <div
       style={{
         gridColumn: "1 / -1",
@@ -252,7 +252,7 @@ return (
       </div>
     </div>
   
-  <div className="input-view-layout">
+   
     <div className="input-view-left">
 
   

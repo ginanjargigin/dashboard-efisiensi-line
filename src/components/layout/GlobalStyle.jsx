@@ -661,7 +661,60 @@ export default function GlobalStyle() {
         .capacity-panel {
           display: none !important;
         }
+      
+/* =========================================
+   INPUT PAGE: DESKTOP TWO-COLUMN LAYOUT
+========================================= */
+
+.input-view-layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1.15fr) minmax(360px, 0.85fr);
+  align-items: start;
+  gap: 20px;
+  width: 100%;
+  max-width: none;
+  margin: 0;
+  padding: 20px;
+  box-sizing: border-box;
+}
+
+.input-view-left,
+.input-view-right {
+  min-width: 0;
+}
+
+.input-view-right {
+  position: sticky;
+  top: 16px;
+}
+
+/* Grafik dan panel mengikuti lebar kolom */
+.input-view-right > * {
+  min-width: 0;
+  max-width: 100%;
+}
+
+/* Tablet dan HP */
+@media (max-width: 900px) {
+  .input-view-layout {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .input-view-right {
+    position: static;
+  }
+}
+
+@media (max-width: 768px) {
+  .input-view-layout {
+    gap: 16px;
+    padding: 14px;
+  }
+}
+
+      
       }
+      
     `}</style>
   );
 }

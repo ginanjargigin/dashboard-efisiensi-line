@@ -168,13 +168,11 @@ export default function InputView({
     );
   };
 
-  return (
-    <div
-      style={{
-        padding: "20px",
-        maxWidth: 720,
-        margin: "0 auto",
-      }}
+  
+return (
+  <div className="input-view-layout">
+    <div className="input-view-left">
+
     >
       {/* DATE NAVIGATION */}
       <div
@@ -544,6 +542,17 @@ export default function InputView({
         ))}
       </div>
 
+      
+    </div>
+
+    <div className="input-view-right">
+      {/* GRAFIK PENCAPAIAN BULANAN */}
+      <MonthlyAchievementChart
+        sheet={sheet}
+        date={date}
+        monthData={monthData}
+      />
+
             
       {/* GRAFIK PENCAPAIAN BULANAN */}
       <MonthlyAchievementChart
@@ -564,6 +573,11 @@ export default function InputView({
               textTransform: "uppercase",
               letterSpacing: 0.6,
             }}
+
+                  {/* penutup blok FILLED DAYS tetap di sini */}
+    </div>
+  </div>
+);
           >
             Tanggal terisi bulan ini
           </div>

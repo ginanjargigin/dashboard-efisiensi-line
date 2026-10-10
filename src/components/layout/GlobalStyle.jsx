@@ -717,6 +717,58 @@ export default function GlobalStyle() {
         }
       }
 
+            /* =========================================
+         SETTINGS: TWO-COLUMN LAYOUT
+      ========================================= */
+
+      .settings-two-column {
+        display: grid;
+        grid-template-columns: minmax(220px, 280px) minmax(0, 1fr);
+        align-items: start;
+        gap: 16px;
+        width: 100%;
+        min-width: 0;
+      }
+
+      .settings-line-picker,
+      .settings-line-editor {
+        min-width: 0;
+      }
+
+      .settings-line-picker {
+        position: sticky;
+        top: 16px;
+      }
+
+      .settings-line-list {
+        max-height: calc(100vh - 220px);
+        overflow-y: auto;
+        padding-right: 4px;
+      }
+
+      .settings-line-editor {
+        width: 100%;
+      }
+
+      @media (max-width: 768px) {
+        .settings-two-column {
+          grid-template-columns: minmax(0, 1fr);
+          gap: 16px;
+        }
+
+        .settings-line-picker {
+          position: static;
+        }
+
+        .settings-line-list {
+          display: grid !important;
+          grid-template-columns: repeat(2, minmax(0, 1fr));
+          max-height: 260px;
+          overflow-y: auto;
+          gap: 8px;
+        }
+      }
+
       /* =========================================
          INPUT PAGE: DESKTOP TWO-COLUMN LAYOUT
       ========================================= */

@@ -241,30 +241,45 @@ export default function MetricCard({
             }
        
             onKeyDown={handleArrowNavigation}
+            ```jsx
             onFocus={(e) => {
-              if (window.innerWidth <= 768) {
-                const input = e.currentTarget;
+              if (window.innerWidth > 768) return;
 
-                requestAnimationFrame(() => {
-                  const rect = input.getBoundingClientRect();
-                  const keyboardGap = 12;
+              const input = e.currentTarget;
+              const viewport = window.visualViewport;
 
-                  const visibleBottom = window.visualViewport
-                    ? window.visualViewport.height
-                    : window.innerHeight;
+              const adjustScroll = () => {
+                const rect = input.getBoundingClientRect();
+                const visibleBottom = viewport
+                  ? viewport.offsetTop + viewport.height
+                  : window.innerHeight;
 
-                  const targetBottom = visibleBottom - keyboardGap;
-                  const overflow = rect.bottom - targetBottom;
+                // Sisakan jarak 8 px dari tepi atas keyboard.
+                const targetBottom = visibleBottom - 8;
+                const overflow = rect.bottom - targetBottom;
 
-                  if (overflow > 0) {
-                    window.scrollBy({
-                      top: overflow + 12,
-                      behavior: "smooth",
-                    });
-                  }
-                });
+                if (overflow > 0) {
+                  window.scrollBy({
+                    top: overflow + 8,
+                    behavior: "smooth",
+                  });
+                }
+              };
+
+              requestAnimationFrame(() => {
+                requestAnimationFrame(adjustScroll);
+              });
+
+              // Sesuaikan lagi ketika keyboard mengubah viewport.
+              if (viewport) {
+                viewport.addEventListener(
+                  "resize",
+                  adjustScroll,
+                  { once: true }
+                );
               }
             }}
+```
            
               style={{
               width: "100%",

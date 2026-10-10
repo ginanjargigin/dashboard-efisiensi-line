@@ -542,7 +542,6 @@ return (
           />
         ))}
       </div>
-    </div>
 
  {/* CATATAN HARIAN */}
       <div

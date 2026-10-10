@@ -15,7 +15,14 @@ const NAV_ITEMS = [
   { id: "settings", label: "Pengaturan", description: "Tema dan master data", icon: Settings },
 ];
 
-export default function MobileNavigation({ view, setView, saveState }) {
+export default function MobileNavigation({
+  view,
+  setView,
+  saveState,
+  sheets,
+  sheetId,
+  setSheetId,
+}) {
   const [open, setOpen] = useState(false);
 
   useEffect(() => {
@@ -395,6 +402,53 @@ export default function MobileNavigation({ view, setView, saveState }) {
                         <span className="mobile-navigation-item-description">
                           {item.description}
                         </span>
+                      </span>
+                    </button>
+                  );
+                })}
+              </div>
+
+                            <div className="mobile-navigation-menu-label" style={{ marginTop: 24 }}>
+                Daftar line
+              </div>
+
+              <div className="mobile-navigation-menu">
+                {sheets.map((sheet) => {
+                  const active = sheet.id === sheetId;
+
+                  return (
+                    <button
+                      key={sheet.id}
+                      type="button"
+                      className={`mobile-navigation-item${active ? " is-active" : ""}`}
+                      onClick={() => {
+                        setSheetId(sheet.id);
+                        setView("input");
+                        setOpen(false);
+                        window.scrollTo({ top: 0, behavior: "auto" });
+                      }}
+                      aria-current={active ? "true" : undefined}
+                    >
+                      <span className="mobile-navigation-item-icon">
+                        <span
+                          style={{
+                            width: 9,
+                            height: 9,
+                            borderRadius: "50%",
+                            background: "currentColor",
+                          }}
+                        />
+                      </span>
+
+                      <span className="mobile-navigation-item-copy">
+                        <span className="mobile-navigation-item-label">
+                          {sheet.name}
+                        </span>
+                        {active && (
+                          <span className="mobile-navigation-item-description">
+                            Line aktif
+                          </span>
+                        )}
                       </span>
                     </button>
                   );

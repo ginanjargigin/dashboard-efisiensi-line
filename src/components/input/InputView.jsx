@@ -173,7 +173,7 @@ return (
   <div className="input-view-layout">
     <div className="input-view-left">
 
-    >
+  
       {/* DATE NAVIGATION */}
       <div
         style={{

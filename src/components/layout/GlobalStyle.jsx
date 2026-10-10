@@ -890,7 +890,7 @@ export default function GlobalStyle() {
         max-width: 100%;
       }
 
-      @media (max-width: 900px) {
+      @media (max-width: 700px) {
         .input-view-layout {
           grid-template-columns: minmax(0, 1fr);
         }

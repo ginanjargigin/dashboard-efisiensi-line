@@ -170,58 +170,40 @@ export default function InputView({
 
   
 return (
-   <div className="input-view-layout">
+        {/* NAMA LINE AKTIF */}
       <div
-      style={{
-        gridColumn: "1 / -1",
-        display: "flex",
-        alignItems: "center",
-        justifyContent: "space-between",
-        flexWrap: "wrap",
-        gap: 14,
-        padding: "18px",
-        marginBottom: 0,
-        background: `linear-gradient(135deg, var(--color-accent-soft), ${C.panel})`,
-        border: `1px solid ${C.amber}`,
-        borderRadius: 14,
-        minWidth: 0,
-      }}
-    >
-      <div style={{ display: "flex", alignItems: "center", gap: 14, minWidth: 0 }}>
-        <div
-          style={{
-            width: 58,
-            height: 58,
-            flex: "0 0 58px",
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
-            background: C.amber,
-            color: "var(--color-accent-text)",
-            borderRadius: 12,
-            fontSize: 28,
-            fontWeight: 800,
-          }}
-        >
-          P
-        </div>
-
+        className="input-active-line-card"
+        style={{
+          gridColumn: "1 / -1",
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "space-between",
+          flexWrap: "wrap",
+          gap: 10,
+          padding: "12px 16px",
+          background: `linear-gradient(135deg, var(--color-accent-soft), ${C.panel})`,
+          border: `1px solid ${C.amber}`,
+          borderRadius: 12,
+          minWidth: 0,
+        }}
+      >
         <div style={{ minWidth: 0 }}>
           <div
             style={{
-              fontSize: 11,
+              fontSize: 10,
               color: C.muted,
               letterSpacing: 1,
-              marginBottom: 5,
+              marginBottom: 4,
+              fontWeight: 600,
             }}
           >
-            HALAMAN INPUT · LINE AKTIF
+            LINE AKTIF
           </div>
 
           <div
             style={{
-              fontSize: 28,
-              lineHeight: 1.15,
+              fontSize: 22,
+              lineHeight: 1.2,
               fontWeight: 700,
               fontFamily: "'Barlow Condensed', sans-serif",
               color: C.amber,
@@ -230,27 +212,23 @@ return (
           >
             {sheet.name}
           </div>
+        </div>
 
-          <div style={{ fontSize: 12, color: C.muted, marginTop: 5 }}>
-            Production Monitoring
-          </div>
+        <div
+          style={{
+            border: "1px solid #22A06B",
+            background: "rgba(34, 160, 107, 0.10)",
+            color: "#22A06B",
+            borderRadius: 20,
+            padding: "5px 10px",
+            fontSize: 11,
+            fontWeight: 700,
+            whiteSpace: "nowrap",
+          }}
+        >
+          ● Aktif
         </div>
       </div>
-
-      <div
-        style={{
-          border: `1px solid ${C.amber}`,
-          color: C.amber,
-          borderRadius: 20,
-          padding: "7px 13px",
-          fontSize: 12,
-          fontWeight: 700,
-          whiteSpace: "nowrap",
-        }}
-      >
-        ● Aktif
-      </div>
-    </div>
   
    
     <div className="input-view-left">
@@ -360,70 +338,7 @@ return (
         </button>
       </div>
 
-      {/* CATATAN HARIAN */}
-      <div
-        style={{
-          background: C.panel,
-          border: `1px solid ${C.line}`,
-          borderRadius: 12,
-          padding: 12,
-          marginBottom: 16,
-        }}
-      >
-        <div
-          style={{
-            fontSize: 11,
-            color: C.muted,
-            textTransform: "uppercase",
-            letterSpacing: 0.6,
-            marginBottom: 7,
-            fontWeight: 600,
-          }}
-        >
-          Catatan Hari Ini
-        </div>
-
-        <textarea
-          className="note-field"
-          value={note}
-          onChange={(e) =>
-            updateNote(
-              sheet.id,
-              date,
-              e.target.value
-            )
-          }
-          placeholder="Tulis problem, kendala, downtime, atau kejadian penting hari ini..."
-          rows={3}
-          style={{
-            width: "100%",
-            resize: "vertical",
-            minHeight: 72,
-            maxHeight: 150,
-            background: "var(--color-input)",
-            border: `1px solid ${C.line}`,
-            borderRadius: 8,
-            padding: "9px 11px",
-            color: C.text,
-            fontSize: 13,
-            lineHeight: 1.45,
-            fontFamily:
-              "'Inter', sans-serif",
-            outline: "none",
-            boxSizing: "border-box",
-          }}
-        />
-
-        <div
-          style={{
-            marginTop: 6,
-            fontSize: 10.5,
-            color: C.muted,
-          }}
-        >
-          Tersimpan otomatis setelah perubahan.
-        </div>
-      </div>
+     
 
       {/* ============================================================
           NG HARI INI
@@ -628,14 +543,81 @@ return (
       </div>
     </div>
 
-    {/* PANEL KANAN: GRAFIK DAN RIWAYAT */}
-    <div className="input-view-right">
-      <MonthlyAchievementChart
-        sheet={sheet}
-        date={date}
-        monthData={monthData}
-      />
+ {/* CATATAN HARIAN */}
+      <div
+        style={{
+          background: C.panel,
+          border: `1px solid ${C.line}`,
+          borderRadius: 12,
+          padding: 12,
+          marginBottom: 16,
+        }}
+      >
+        <div
+          style={{
+            fontSize: 11,
+            color: C.muted,
+            textTransform: "uppercase",
+            letterSpacing: 0.6,
+            marginBottom: 7,
+            fontWeight: 600,
+          }}
+        >
+          Catatan Hari Ini
+        </div>
 
+        <textarea
+          className="note-field"
+          value={note}
+          onChange={(e) =>
+            updateNote(
+              sheet.id,
+              date,
+              e.target.value
+            )
+          }
+          placeholder="Tulis problem, kendala, downtime, atau kejadian penting hari ini..."
+          rows={3}
+          style={{
+            width: "100%",
+            resize: "vertical",
+            minHeight: 72,
+            maxHeight: 150,
+            background: "var(--color-input)",
+            border: `1px solid ${C.line}`,
+            borderRadius: 8,
+            padding: "9px 11px",
+            color: C.text,
+            fontSize: 13,
+            lineHeight: 1.45,
+            fontFamily:
+              "'Inter', sans-serif",
+            outline: "none",
+            boxSizing: "border-box",
+          }}
+        />
+
+        <div
+          style={{
+            marginTop: 6,
+            fontSize: 10.5,
+            color: C.muted,
+          }}
+        >
+          Tersimpan otomatis setelah perubahan.
+        </div>
+      </div>
+
+
+       {/* PANEL KANAN: GRAFIK DAN RIWAYAT */}
+    <div className="input-view-right">
+      <div className="mobile-hide-achievement-chart">
+        <MonthlyAchievementChart
+          sheet={sheet}
+          date={date}
+          monthData={monthData}
+        />
+      </div>
       {/* FILLED DAYS */}
       {filledDays.length > 0 && (
         <div style={{ marginTop: 26 }}>

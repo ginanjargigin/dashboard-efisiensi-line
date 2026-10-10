@@ -661,7 +661,11 @@ export default function GlobalStyle() {
         .capacity-panel {
           display: none !important;
         }
-        /* =========================================
+     
+      }
+      /* Akhir aturan @media print */
+
+      /* =========================================
          INPUT PAGE: DESKTOP TWO-COLUMN LAYOUT
       ========================================= */
 
@@ -707,7 +711,8 @@ export default function GlobalStyle() {
           gap: 16px;
           padding: 14px;
         }
-      
+      }
+ 
         
     `}</style>
   );

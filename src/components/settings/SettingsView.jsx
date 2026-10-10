@@ -39,9 +39,7 @@ const activeSheetId = sheets.some(
 )
   ? selectedSheetId
   : sheets[0]?.id ?? null;
-  const [selectedSheetId, setSelectedSheetId] = useState(
-    sheets[0]?.id ?? null
-  );
+ 
   
 
   return (

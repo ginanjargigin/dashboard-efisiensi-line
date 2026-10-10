@@ -170,6 +170,7 @@ export default function InputView({
 
   
 return (
+      <div className="input-view-layout">
         {/* NAMA LINE AKTIF */}
       <div
         className="input-active-line-card"

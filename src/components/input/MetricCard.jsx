@@ -242,40 +242,41 @@ export default function MetricCard({
        
             onKeyDown={handleArrowNavigation}
         
+         
             onFocus={(e) => {
               if (window.innerWidth > 768) return;
 
               const input = e.currentTarget;
               const viewport = window.visualViewport;
 
-              const adjustScroll = () => {
+              const moveInputNearKeyboard = () => {
                 const rect = input.getBoundingClientRect();
+
                 const visibleBottom = viewport
                   ? viewport.offsetTop + viewport.height
                   : window.innerHeight;
 
-                // Sisakan jarak 8 px dari tepi atas keyboard.
-                const targetBottom = visibleBottom - 8;
-                const overflow = rect.bottom - targetBottom;
+                const gap = 8;
+                const difference =
+                  visibleBottom - gap - rect.bottom;
 
-                if (overflow > 0) {
+                // Dekatkan input ke bagian atas keyboard.
+                if (Math.abs(difference) > 20) {
                   window.scrollBy({
-                    top: overflow + 8,
+                    top: -difference,
                     behavior: "smooth",
                   });
                 }
               };
 
               requestAnimationFrame(() => {
-                requestAnimationFrame(adjustScroll);
+                requestAnimationFrame(moveInputNearKeyboard);
               });
 
-              // Sesuaikan lagi ketika keyboard mengubah viewport.
               if (viewport) {
                 viewport.addEventListener(
                   "resize",
-                  adjustScroll,
-                  { once: true }
+                  moveInputNearKeyboard
                 );
               }
             }}
@@ -355,40 +356,40 @@ export default function MetricCard({
             }
             onKeyDown={handleArrowNavigation}
           
-            onFocus={(e) => {
+           onFocus={(e) => {
               if (window.innerWidth > 768) return;
 
               const input = e.currentTarget;
               const viewport = window.visualViewport;
 
-              const adjustScroll = () => {
+              const moveInputNearKeyboard = () => {
                 const rect = input.getBoundingClientRect();
+
                 const visibleBottom = viewport
                   ? viewport.offsetTop + viewport.height
                   : window.innerHeight;
 
-                // Sisakan jarak 8 px dari tepi atas keyboard.
-                const targetBottom = visibleBottom - 8;
-                const overflow = rect.bottom - targetBottom;
+                const gap = 8;
+                const difference =
+                  visibleBottom - gap - rect.bottom;
 
-                if (overflow > 0) {
+                // Dekatkan input ke bagian atas keyboard.
+                if (Math.abs(difference) > 20) {
                   window.scrollBy({
-                    top: overflow + 8,
+                    top: -difference,
                     behavior: "smooth",
                   });
                 }
               };
 
               requestAnimationFrame(() => {
-                requestAnimationFrame(adjustScroll);
+                requestAnimationFrame(moveInputNearKeyboard);
               });
 
-              // Sesuaikan lagi ketika keyboard mengubah viewport.
               if (viewport) {
                 viewport.addEventListener(
                   "resize",
-                  adjustScroll,
-                  { once: true }
+                  moveInputNearKeyboard
                 );
               }
             }}

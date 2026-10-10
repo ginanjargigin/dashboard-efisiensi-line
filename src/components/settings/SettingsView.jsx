@@ -30,6 +30,10 @@ export default function SettingsView({
   const [newNgNames, setNewNgNames] = useState({});
   const [ngFeedback, setNgFeedback] = useState({});
   const [newSheetName, setNewSheetName] = useState("");
+  const [selectedSheetId, setSelectedSheetId] = useState(
+    sheets[0]?.id ?? null
+  );
+  
 
   return (
     <div

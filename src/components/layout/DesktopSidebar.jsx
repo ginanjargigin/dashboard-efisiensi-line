@@ -48,8 +48,7 @@ return (
       "--sidebar-muted": C.muted,
       "--sidebar-accent": C.amber,
     }}
-  >
-
+  
     >
       <div className="desktop-sidebar-brand">
         <div className="desktop-sidebar-logo">

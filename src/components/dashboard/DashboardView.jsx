@@ -228,33 +228,45 @@ const best = rowsWithAchievement.length
             }}
           >
             <select
-              className="dashboard-line-select"
-              value={sheetId}
-              onChange={(event) => setSheetId(event.target.value)}
-              style={{
-                ...controlStyle,
-                height: 46,
-                boxSizing: "border-box",
-              }}
+           
+            {/* TAB PILIH LINE */}
+            <div
+              className="dashboard-line-tabs"
+              role="group"
+              aria-label="Pilih line produksi"
             >
-              {sheets.map((item) => (
-                <option key={item.id} value={item.id}>
-                  {item.name}
-                </option>
-              ))}
-            </select>
+              {sheets.map((item) => {
+                const isActive = item.id === sheetId;
 
+                return (
+                  <button
+                    key={item.id}
+                    type="button"
+                    className={`dashboard-line-tab${isActive ? " is-active" : ""}`}
+                    onClick={() => setSheetId(item.id)}
+                    aria-pressed={isActive}
+                    title={item.name}
+                  >
+                    {item.name}
+                  </button>
+                );
+              })}
+            </div>
+
+            {/* PILIH BULAN */}
             <select
               className="dashboard-month-select"
               value={mk}
               onChange={(event) =>
                 setDate(`${event.target.value}-01`)
               }
+              aria-label="Pilih bulan rekapitulasi"
               style={{
                 ...controlStyle,
                 height: 46,
                 boxSizing: "border-box",
-                color: C.amber,
+                border: "1px solid var(--color-accent)",
+                outline: "none",
                 fontWeight: 600,
               }}
             >
@@ -263,6 +275,7 @@ const best = rowsWithAchievement.length
                   {option.label}
                 </option>
               ))}
+            
             </select>
 
             <div className="dashboard-actions">

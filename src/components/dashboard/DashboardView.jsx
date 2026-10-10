@@ -227,7 +227,7 @@ const best = rowsWithAchievement.length
               minWidth: 0,
             }}
           >
-            <select
+            
            
             {/* TAB PILIH LINE */}
             <div

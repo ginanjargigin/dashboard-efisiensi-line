@@ -81,59 +81,60 @@ export default function MonthlyAchievementChart({
     (item) => item.pct !== null
   ).length;
 
-  return (
-    <section
-      className="print-card"
-      style={{
-        marginTop: 18,
-        marginBottom: 18,
-        padding: 14,
-        background: C.panel,
-        border: `1px solid ${C.line}`,
-        borderRadius: 12,
-        minWidth: 0,
-      }}
  
-      <div
+return (
+  <section
+    className="print-card"
+    style={{
+      marginTop: 18,
+      marginBottom: 18,
+      padding: 14,
+      background: C.panel,
+      border: `1px solid ${C.line}`,
+      borderRadius: 12,
+      minWidth: 0,
+    }}
+  >
+    <div
+      style={{
+        display: "flex",
+        alignItems: "baseline",
+        flexWrap: "wrap",
+        gap: 6,
+        fontSize: 18,
+        fontWeight: 700,
+        fontFamily: "'Barlow Condensed', sans-serif",
+        marginBottom: 4,
+      }}
+    >
+      <span>Grafik Pencapaian</span>
+      <span style={{ color: C.muted }}>Line</span>
+
+      <a
+        href="#"
+        onClick={(e) => e.preventDefault()}
         style={{
-          display: "flex",
-          alignItems: "baseline",
-          flexWrap: "wrap",
-          gap: 6,
-          fontSize: 18,
-          fontWeight: 700,
-          fontFamily: "'Barlow Condensed', sans-serif",
-          marginBottom: 4,
+          color: C.accent,
+          font: "inherit",
+          textDecoration: "none",
+          cursor: "pointer",
         }}
       >
-        <span>Grafik Pencapaian</span>
+        {sheet.name}
+      </a>
+    </div>
 
-        <span style={{ color: C.muted }}>Line</span>
+    <div
+      style={{
+        fontSize: 11,
+        color: C.muted,
+        marginBottom: 12,
+      }}
+    >
+      Bulan {monthLabel(mk)}
+    </div>
 
-        <a
-          href="#"
-          onClick={(e) => e.preventDefault()}
-          style={{
-            color: C.accent,
-            font: "inherit",
-            textDecoration: "none",
-            cursor: "pointer",
-          }}
-        >
-          {sheet.name}
-        </a>
-      </div>
-
-      <div
-        style={{
-          fontSize: 11,
-          color: C.muted,
-          marginBottom: 12,
-        }}
-      >
-        Bulan {monthLabel(mk)}
-      </div>
-
+    {/* Lanjutkan isi grafik yang sudah ada di sini */}
 
       <div style={{ height: 220, minWidth: 0 }}>
         <ResponsiveContainer width="100%" height="100%">

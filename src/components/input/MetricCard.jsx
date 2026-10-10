@@ -241,7 +241,7 @@ export default function MetricCard({
             }
        
             onKeyDown={handleArrowNavigation}
-            ```jsx
+        
             onFocus={(e) => {
               if (window.innerWidth > 768) return;
 
@@ -279,7 +279,6 @@ export default function MetricCard({
                 );
               }
             }}
-```
            
               style={{
               width: "100%",
@@ -355,6 +354,44 @@ export default function MetricCard({
               )
             }
             onKeyDown={handleArrowNavigation}
+          
+            onFocus={(e) => {
+              if (window.innerWidth > 768) return;
+
+              const input = e.currentTarget;
+              const viewport = window.visualViewport;
+
+              const adjustScroll = () => {
+                const rect = input.getBoundingClientRect();
+                const visibleBottom = viewport
+                  ? viewport.offsetTop + viewport.height
+                  : window.innerHeight;
+
+                // Sisakan jarak 8 px dari tepi atas keyboard.
+                const targetBottom = visibleBottom - 8;
+                const overflow = rect.bottom - targetBottom;
+
+                if (overflow > 0) {
+                  window.scrollBy({
+                    top: overflow + 8,
+                    behavior: "smooth",
+                  });
+                }
+              };
+
+              requestAnimationFrame(() => {
+                requestAnimationFrame(adjustScroll);
+              });
+
+              // Sesuaikan lagi ketika keyboard mengubah viewport.
+              if (viewport) {
+                viewport.addEventListener(
+                  "resize",
+                  adjustScroll,
+                  { once: true }
+                );
+              }
+            }}
             style={{
               width: "100%",
 

@@ -815,6 +815,24 @@ export default function GlobalStyle() {
           gap: 16px;
           padding: 14px;
         }
+              /* =========================================
+         INPUT PAGE: MOBILE VIEW
+      ========================================= */
+
+      @media (max-width: 768px) {
+        .input-active-line-card {
+          padding: 10px 12px !important;
+          gap: 8px !important;
+        }
+
+        .input-active-line-card > div:first-child > div:last-child {
+          font-size: 20px !important;
+        }
+
+        .mobile-hide-achievement-chart {
+          display: none !important;
+        }
+      }
       }
  
         

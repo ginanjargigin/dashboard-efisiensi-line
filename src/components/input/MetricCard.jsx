@@ -239,7 +239,34 @@ export default function MetricCard({
                 e.target.value
               )
             }
+       
             onKeyDown={handleArrowNavigation}
+            onFocus={(e) => {
+              if (window.innerWidth <= 768) {
+                const input = e.currentTarget;
+
+                requestAnimationFrame(() => {
+                  const rect = input.getBoundingClientRect();
+                  const keyboardGap = 12;
+
+                  const visibleBottom = window.visualViewport
+                    ? window.visualViewport.height
+                    : window.innerHeight;
+
+                  const targetBottom = visibleBottom - keyboardGap;
+                  const overflow = rect.bottom - targetBottom;
+
+                  if (overflow > 0) {
+                    window.scrollBy({
+                      top: overflow + 12,
+                      behavior: "smooth",
+                    });
+                  }
+                });
+              }
+            }}
+            style={{
+              width: "100%",
             style={{
               width: "100%",
 

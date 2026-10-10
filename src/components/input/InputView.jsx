@@ -170,33 +170,106 @@ export default function InputView({
 
   
 return (
+
+      <div
+      style={{
+        gridColumn: "1 / -1",
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "space-between",
+        flexWrap: "wrap",
+        gap: 14,
+        padding: "18px",
+        marginBottom: 0,
+        background: "linear-gradient(135deg, #33271F, #252729)",
+        border: "1px solid #805735",
+        borderRadius: 14,
+        minWidth: 0,
+      }}
+    >
+      <div style={{ display: "flex", alignItems: "center", gap: 14, minWidth: 0 }}>
+        <div
+          style={{
+            width: 58,
+            height: 58,
+            flex: "0 0 58px",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            background: "#805735",
+            color: "#FFF4E8",
+            borderRadius: 12,
+            fontSize: 28,
+            fontWeight: 800,
+          }}
+        >
+          P
+        </div>
+
+        <div style={{ minWidth: 0 }}>
+          <div
+            style={{
+              fontSize: 11,
+              color: C.muted,
+              letterSpacing: 1,
+              marginBottom: 5,
+            }}
+          >
+            HALAMAN INPUT · LINE AKTIF
+          </div>
+
+          <div
+            style={{
+              fontSize: 28,
+              lineHeight: 1.15,
+              fontWeight: 700,
+              fontFamily: "'Barlow Condensed', sans-serif",
+              color: "#D6A477",
+              overflowWrap: "anywhere",
+            }}
+          >
+            {sheet.name}
+          </div>
+
+          <div style={{ fontSize: 12, color: C.muted, marginTop: 5 }}>
+            Production Monitoring
+          </div>
+        </div>
+      </div>
+
+      <div
+        style={{
+          border: "1px solid #805735",
+          color: "#D6A477",
+          borderRadius: 20,
+          padding: "7px 13px",
+          fontSize: 12,
+          fontWeight: 700,
+          whiteSpace: "nowrap",
+        }}
+      >
+        ● Aktif
+      </div>
+    </div>
+  
   <div className="input-view-layout">
     <div className="input-view-left">
 
   
-      {/* DATE NAVIGATION */}
+           {/* DATE NAVIGATION */}
       <div
         style={{
           display: "flex",
           alignItems: "center",
           gap: 8,
           marginBottom: 18,
+          minWidth: 0,
         }}
       >
-        <button
-          title="Tanggal Sebelumnya"
-          onClick={() => shiftDate(-1)}
-          style={{
-            ...inputIconBtnStyle,
-            flex: "0 0 44px",
-          }}
-        >
-          <ChevronLeft size={18} />
-        </button>
-
+        {/* KOLOM TANGGAL */}
         <div
           style={{
-            flex: 1,
+            flex: "1 1 180px",
             minWidth: 0,
             position: "relative",
           }}
@@ -216,41 +289,25 @@ return (
             type="date"
             lang="id-ID"
             value={date}
-            onChange={(e) =>
-              setDate(e.target.value)
-            }
+            onChange={(e) => setDate(e.target.value)}
             style={{
               width: "100%",
               minWidth: 0,
-              maxWidth: "100%",
+              height: 44,
               boxSizing: "border-box",
               display: "block",
-              WebkitAppearance: "none",
-              appearance: "none",
-              overflow: "hidden",
               background: "var(--color-input)",
               border: `1px solid ${C.amber}`,
               borderRadius: 10,
-              padding: "10px 12px 10px 34px",
+              padding: "10px 8px 10px 34px",
               color: C.text,
               fontSize: 14,
-              fontFamily:
-                "'IBM Plex Mono', monospace",
+              fontFamily: "'IBM Plex Mono', monospace",
             }}
           />
         </div>
 
-        <button
-          title="Tanggal Berikutnya"
-          onClick={() => shiftDate(1)}
-          style={{
-            ...inputIconBtnStyle,
-            flex: "0 0 44px",
-          }}
-        >
-          <ChevronRight size={18} />
-        </button>
-
+        {/* TOMBOL HARI INI */}
         <button
           onClick={() => setDate(todayISO())}
           title="Hari Ini"
@@ -262,8 +319,12 @@ return (
             minWidth: 105,
             flex: "0 0 105px",
             height: 44,
-            padding: "0 14px",
+            padding: "0 12px",
             cursor: "pointer",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            gap: 7,
           }}
         >
           <CalendarCheck
@@ -271,8 +332,31 @@ return (
             color={C.amber}
             strokeWidth={2.2}
           />
-
           <span>Hari Ini</span>
+        </button>
+
+        {/* TOMBOL TANGGAL SEBELUMNYA */}
+        <button
+          title="Tanggal Sebelumnya"
+          onClick={() => shiftDate(-1)}
+          style={{
+            ...inputIconBtnStyle,
+            flex: "0 0 44px",
+          }}
+        >
+          <ChevronLeft size={18} />
+        </button>
+
+        {/* TOMBOL TANGGAL BERIKUTNYA */}
+        <button
+          title="Tanggal Berikutnya"
+          onClick={() => shiftDate(1)}
+          style={{
+            ...inputIconBtnStyle,
+            flex: "0 0 44px",
+          }}
+        >
+          <ChevronRight size={18} />
         </button>
       </div>
 

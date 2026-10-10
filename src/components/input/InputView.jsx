@@ -181,8 +181,8 @@ return (
         gap: 14,
         padding: "18px",
         marginBottom: 0,
-        background: "linear-gradient(135deg, #33271F, #252729)",
-        border: "1px solid #805735",
+        background: `linear-gradient(135deg, var(--color-accent-soft), ${C.panel})`,
+        border: `1px solid ${C.amber}`,
         borderRadius: 14,
         minWidth: 0,
       }}
@@ -196,8 +196,8 @@ return (
             display: "flex",
             alignItems: "center",
             justifyContent: "center",
-            background: "#805735",
-            color: "#FFF4E8",
+            background: C.amber,
+            color: "var(--color-accent-text)",
             borderRadius: 12,
             fontSize: 28,
             fontWeight: 800,
@@ -224,7 +224,7 @@ return (
               lineHeight: 1.15,
               fontWeight: 700,
               fontFamily: "'Barlow Condensed', sans-serif",
-              color: "#D6A477",
+              color: C.amber,
               overflowWrap: "anywhere",
             }}
           >
@@ -239,8 +239,8 @@ return (
 
       <div
         style={{
-          border: "1px solid #805735",
-          color: "#D6A477",
+          border: `1px solid ${C.amber}`,
+          color: C.amber,
           borderRadius: 20,
           padding: "7px 13px",
           fontSize: 12,

@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import {
   Calculator,
+  CalendarDays,
   Keyboard,
   LayoutDashboard,
   Menu,
@@ -16,12 +17,15 @@ const NAV_ITEMS = [
 ];
 
 export default function MobileNavigation({
-  view,
+ view,
   setView,
   saveState,
   sheets,
   sheetId,
   setSheetId,
+  date,
+  setDate,
+  currentSheetName,
 }) {
   const [open, setOpen] = useState(false);
 
@@ -304,6 +308,56 @@ export default function MobileNavigation({
           overflow: visible;
         }
 
+        .mobile-navigation-sticky {
+  display: none;
+}
+
+@media (max-width: 768px) {
+  .mobile-navigation-sticky {
+    display: block;
+    position: sticky;
+    top: 0;
+    z-index: 900;
+    background: var(--color-panel);
+    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.16);
+  }
+
+  .mobile-date-toolbar {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    min-height: 52px;
+    padding: 7px 12px;
+    border-bottom: 1px solid var(--color-line);
+    background: var(--color-panel);
+  }
+
+  .mobile-date-line-name {
+    flex: 1 1 auto;
+    min-width: 0;
+    overflow: hidden;
+    color: var(--color-muted);
+    font-size: 11px;
+    font-weight: 600;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .mobile-date-control {
+    flex: 0 0 148px;
+    width: 148px;
+    min-width: 0;
+    height: 36px;
+    padding: 0 6px;
+    border: 1px solid var(--color-accent);
+    border-radius: 8px;
+    background: var(--color-input);
+    color: var(--color-text);
+    font-family: "IBM Plex Mono", monospace;
+    font-size: 12px;
+  }
+}
+
         @media (max-width: 768px) {
           .desktop-navigation-shell {
             display: none !important;
@@ -320,6 +374,7 @@ export default function MobileNavigation({
       `}</style>
 
       <div className="mobile-navigation-shell no-print">
+         <div className="mobile-navigation-sticky">
         <header className="mobile-navigation-header">
           <button
             type="button"
@@ -341,6 +396,30 @@ export default function MobileNavigation({
             </div>
           )}
         </header>
+           {date && setDate && (
+          <div className="mobile-date-toolbar">
+            <div
+              className="mobile-date-line-name"
+              title={currentSheetName || ""}
+            >
+              {currentSheetName || "Line produksi"}
+            </div>
+        
+            <CalendarDays
+              size={16}
+              color="var(--color-accent)"
+            />
+        
+            <input
+              className="mobile-date-control"
+              type="date"
+              lang="id-ID"
+              value={date}
+              onChange={(event) => setDate(event.target.value)}
+              aria-label="Pilih tanggal produksi"
+            />
+          </div>
+        )}
 
         {open && (
           <div
@@ -464,7 +543,8 @@ export default function MobileNavigation({
             </nav>
           </div>
         )}
-      </div>
+       </div>
+      </div>    
     </>
   );
 }

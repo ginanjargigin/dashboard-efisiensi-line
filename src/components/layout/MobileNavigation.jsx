@@ -308,15 +308,23 @@ export default function MobileNavigation({
           overflow: visible;
         }
 
-        .mobile-navigation-sticky {
+       .mobile-navigation-sticky {
   display: none;
 }
 
 @media (max-width: 768px) {
+  .mobile-navigation-shell {
+    display: block;
+    height: 110px;
+  }
+
   .mobile-navigation-sticky {
     display: block;
-    position: sticky;
+    position: fixed;
     top: 0;
+    left: 0;
+    right: 0;
+    width: 100%;
     z-index: 900;
     background: var(--color-panel);
     box-shadow: 0 4px 14px rgba(0, 0, 0, 0.16);
@@ -353,7 +361,6 @@ export default function MobileNavigation({
     border-radius: 8px;
     background: var(--color-input);
     color: var(--color-text);
-    font-family: "IBM Plex Mono", monospace;
     font-size: 12px;
   }
 }

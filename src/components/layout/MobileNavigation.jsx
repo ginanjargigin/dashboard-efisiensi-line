@@ -29,6 +29,34 @@ export default function MobileNavigation({
 }) {
   const [open, setOpen] = useState(false);
 
+  // Keep the fixed mobile header aligned with the visible viewport when
+  // the on-screen keyboard opens or the browser scrolls the visual viewport.
+  useEffect(() => {
+    const viewport = window.visualViewport;
+    if (!viewport) return undefined;
+
+    const updateViewportTop = () => {
+      document.documentElement.style.setProperty(
+        "--mobile-visual-viewport-top",
+        `${Math.max(0, viewport.offsetTop)}px`
+      );
+    };
+
+    updateViewportTop();
+    viewport.addEventListener("resize", updateViewportTop);
+    viewport.addEventListener("scroll", updateViewportTop);
+    window.addEventListener("resize", updateViewportTop);
+
+    return () => {
+      viewport.removeEventListener("resize", updateViewportTop);
+      viewport.removeEventListener("scroll", updateViewportTop);
+      window.removeEventListener("resize", updateViewportTop);
+      document.documentElement.style.removeProperty(
+        "--mobile-visual-viewport-top"
+      );
+    };
+  }, []);
+
   useEffect(() => {
     if (!open) return undefined;
 
@@ -308,7 +336,7 @@ export default function MobileNavigation({
           overflow: visible;
         }
 
-       .mobile-navigation-sticky {
+        .mobile-navigation-sticky {
   display: none;
 }
 
@@ -321,7 +349,7 @@ export default function MobileNavigation({
   .mobile-navigation-sticky {
     display: block;
     position: fixed;
-    top: 0;
+    top: var(--mobile-visual-viewport-top, 0px);
     left: 0;
     right: 0;
     width: 100%;
@@ -361,6 +389,7 @@ export default function MobileNavigation({
     border-radius: 8px;
     background: var(--color-input);
     color: var(--color-text);
+    font-family: "IBM Plex Mono", monospace;
     font-size: 12px;
   }
 }

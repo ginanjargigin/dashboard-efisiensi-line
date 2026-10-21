@@ -4,7 +4,18 @@ import React, {
   useState,
   useEffect,
   useRef,
+  
 } from "react";
+
+import {
+  Calculator,
+  CalendarDays,
+  Keyboard,
+  LayoutDashboard,
+  Menu,
+  Settings,
+  X,
+} from "lucide-react";
 
 import { initializeDb } from "./src/services/dbService";
 import { saveDbToSupabase } from "./src/services/supabaseWriteService";
@@ -237,6 +248,9 @@ useEffect(() => {
             sheets={sheets}
             sheetId={sheetId}
             setSheetId={setSheetId}
+            date={date}
+            setDate={setDate}
+            currentSheetName={currentSheet.name}
           />
           {/* DAFTAR LINE UNTUK MOBILE */}
           <div
